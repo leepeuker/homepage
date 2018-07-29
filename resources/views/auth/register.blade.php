@@ -52,7 +52,8 @@
                             <label class="col-md-4 col-form-label text-md-right"></label>
 
                             <div class="col-md-6">
-                                {!! Recaptcha::render() !!}
+                                <div class="g-recaptcha" data-sitekey="{{env('RECAPTCHA_PUBLIC_KEY')}}"></div>
+								<script src="https://www.google.com/recaptcha/api.js"></script>
                                 
                                 @if ($errors->has('g-recaptcha-response'))
                                     <span class="invalid-feedback" role="alert" style="display:inline">

@@ -49,7 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $messages = [
-            'g-recaptcha-response.required' => 'The reCAPTCHA field is required!',
+            'g-recaptcha-response.required' => 'Please prove you are not a robot!',
         ];
 
         return Validator::make($data, [
