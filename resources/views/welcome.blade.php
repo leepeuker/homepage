@@ -81,7 +81,7 @@
                 <div class="title m-b-md">
                     Lee Peuker
                 </div>
-                <p>Backend/Full-Stack Web Development and Security</p>
+                <p>Back-End Web Development and Security</p>
             </div>
         </div>
     </body>
