@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Mail;
 use App\User;
+use App\Mail\NewRegistration;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -49,7 +51,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $messages = [
-            'g-recaptcha-response.required' => 'Please prove you are not a robot!',
+            'g-recaptcha-response.required' => 'Please prove you are human!',
         ];
 
         return Validator::make($data, [
@@ -67,6 +69,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        Mail::to(env('MAIL_WEBMASTER', 'lee.peuker@gmail.com'))->send(new NewRegistration($data['email']));
+
         return User::create([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
