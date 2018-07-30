@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Mail;
 use App\User;
+use App\Mail\VerificationMail;
 use App\Mail\NewRegistration;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -69,11 +70,62 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        Mail::to(env('MAIL_WEBMASTER', 'lee.peuker@gmail.com'))->send(new NewRegistration($data['email']));
-
-        return User::create([
+        $user = User::create([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'verification_token' => bin2hex(openssl_random_pseudo_bytes(16))
         ]);
+        
+        Mail::to(env('MAIL_WEBMASTER', 'lee.peuker@gmail.com'))->send(new NewRegistration($user->email));
+        Mail::to($user->email)->send(new VerificationMail($user));
+
+        return $user;
+    }
+    
+    /**
+     * Verify a user with the verification token
+     *
+     * @param  string  $token
+     * @return \App\User
+     */
+    public function verifyUser($token)
+    {
+        $user = User::where('verification_token', $token)->first();
+
+        if (isset($user) ){
+            
+            if (!$user->verified) {
+
+                $user->verified = 1;
+                $user->save();
+                
+                $status = "Your email adresse is verified. You can now login.";
+
+            } else {
+
+                $status = "Your email adresse is already verified. You can now login.";
+            }
+
+        } else {
+
+            return redirect('/login')->with('warning', "Sorry your verification link seems broken.");
+        }
+ 
+        return redirect('/login')->with('status', $status);
+    }
+    
+    
+    /**
+     * Verify a user
+     *
+     * @param  Request  $request
+     * @param  User  $user
+     * @return \App\User
+     */
+    protected function registered($request, $user)
+    {
+        $this->guard()->logout();
+
+        return redirect('/login')->with('status', 'Registration successfull! Please check your email inbox to verify your email address.');
     }
 }

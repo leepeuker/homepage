@@ -36,4 +36,23 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  Request  $request
+     * @param  User  $user
+     * @return void
+     */
+    public function authenticated($request, $user)
+    {
+        if (!$user->verified) {
+
+            auth()->logout();
+
+            return back()->with('warning', 'Please confirm your email address with the verification link sent to you.');
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
 }
