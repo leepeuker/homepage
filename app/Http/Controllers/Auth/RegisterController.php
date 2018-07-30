@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\User;
+use App\Mail\NewRegistration;
 use App\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
 
