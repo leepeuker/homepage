@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use Mail;
-use App\User;
-use App\Mail\VerificationMail;
-use App\Mail\NewRegistration;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\User;
+use App\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\Notification;
 
 class RegisterController extends Controller
 {
@@ -77,7 +78,7 @@ class RegisterController extends Controller
         ]);
         
         Mail::to(env('MAIL_WEBMASTER', 'lee.peuker@gmail.com'))->send(new NewRegistration($user->email));
-        Mail::to($user->email)->send(new VerificationMail($user));
+        Notification::send($user, new VerifyEmail($user));
 
         return $user;
     }
@@ -97,6 +98,7 @@ class RegisterController extends Controller
             if (!$user->verified) {
 
                 $user->verified = 1;
+                $user->verification_token = NULL;
                 $user->save();
                 
                 $status = "Your email adresse is verified. You can now login.";
@@ -126,6 +128,6 @@ class RegisterController extends Controller
     {
         $this->guard()->logout();
 
-        return redirect('/login')->with('status', 'Registration successfull! Please check your email inbox to verify your email address.');
+        return redirect('/login')->with('status', 'Registration successfull! Please check your inbox to verify your email address.');
     }
 }

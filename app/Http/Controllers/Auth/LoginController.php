@@ -50,7 +50,7 @@ class LoginController extends Controller
 
             auth()->logout();
 
-            return back()->with('warning', 'Please confirm your email address with the verification link sent to you.');
+            return back()->with('warning', 'Email address not verified. Please verify your email address with the verification link sent to you.');
         }
 
         return redirect()->intended($this->redirectPath());

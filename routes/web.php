@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
+Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser')->name('user.verify');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('bookmarks', 'BookmarksController');
