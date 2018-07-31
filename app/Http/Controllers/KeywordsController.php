@@ -3,20 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Bookmark;
 
-class BookmarksController extends Controller
+class KeywordsController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +13,7 @@ class BookmarksController extends Controller
      */
     public function index()
     {
-        $bookmarks = Bookmark::orderBy('created_at','desc')->paginate(10);
-        return view('bookmarks.index')->with('bookmarks', $bookmarks);
+        //
     }
 
     /**
@@ -35,7 +23,7 @@ class BookmarksController extends Controller
      */
     public function create()
     {
-        return view('bookmarks.create');
+        //
     }
 
     /**
@@ -46,18 +34,7 @@ class BookmarksController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'url' => 'required|url',
-            'title' => 'required'
-        ]);
-
-        $bookmark = new Bookmark;
-        $bookmark->url = $request->input('url');
-        $bookmark->title = $request->input('title');
-        $bookmark->user_id = auth()->user()->id;
-        $bookmark->save();
-
-        return redirect('/bookmarks/create')->with('success', 'Bookmark was created');
+        //
     }
 
     /**
@@ -102,14 +79,6 @@ class BookmarksController extends Controller
      */
     public function destroy($id)
     {
-        $bookmark = Bookmark::find($id);
-        
-        // Check for correct user
-        if(auth()->user()->admin){
-            return redirect('/bookmarks')->with('error', 'Unauthorized Page');
-        }
-
-        $bookmark->delete();
-        return redirect('/bookmarks')->with('success', 'Bookmark "'. $bookmark->title .'" deleted.');
+        //
     }
 }
