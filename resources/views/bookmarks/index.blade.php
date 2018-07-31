@@ -37,8 +37,8 @@
                     <button type="submit" class="btn btn-danger float-right" style="color:white;margin-top:10px">Delete</button>
                 </form>
                 <h3><a href="{{ $bookmark->url }}" target="_blank">{{ $bookmark->title }}</a></h3>
-            
                 <small>{{ $bookmark->url }}</small>
+                <p style="margin-bottom:0px;margin-top:5px;cursor:pointer">github &nbsp nodejs &nbsp rest-api</p>
             </div>
         </div>
         <br>
