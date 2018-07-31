@@ -12,10 +12,10 @@
             @auth
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/bookmarks">Bookmarks</a>
+                    <a class="nav-link {{ request()->is('bookmarks') ? 'active' : '' }}" href="/bookmarks">Bookmarks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/commands">Commands</a>
+                    <a class="nav-link {{ request()->is('commands') ? 'active' : '' }}" href="/commands">Commands</a>
                 </li>
             </ul>
             @endauth

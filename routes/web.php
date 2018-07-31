@@ -20,3 +20,4 @@ Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser')->name('
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('bookmarks', 'BookmarksController');
+Route::resource('commands', 'CommandsController');
