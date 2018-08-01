@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
+@section('custom_js')
+    <script src="{{ asset('js/custom.js') }}" defer></script>
+@endsection
+
 @section('content')
 <div class="container">
 
     <div class="input-group">
-        <input type="text" name="search" class="form-control" placeholder="Search in ...">
+        <input type="text" name="search" class="form-control" placeholder="Search in ..." autocomplete="off" id="searchTerm">
         <div class="input-group-append">
-            <select class="custom-select" name="searchColumn" id="inputGroupSelect01" style="margin-left:5px">
+            <select class="custom-select" name="searchColumn" id="searchColumn" style="margin-left:5px">
                 <option value="title" selected>Title</option>
                 <option value="keywords">Keywords</option>
                 <option value="url">URL</option>
@@ -26,8 +30,8 @@
             {{ session('warning') }}
         </div>
     @endif
-
-    @if(count($bookmarks) > 0)
+<div id="test1"></div>
+    {{-- @if(!empty($bookmarks))
         @foreach($bookmarks as $bookmark)
         <div class="card" style="background-color: rgba(255,255,255,0.5);">
             <div class="card-body" style="display:inline">
@@ -46,7 +50,7 @@
     @else
         <p>No bookmarks found</p>
         <br>
-    @endif
+    @endif --}}
 
     <a class="btn btn-primary" href="{{ route('bookmarks.create') }}">Create Bookmark</a>
 </div>

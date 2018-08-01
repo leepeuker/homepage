@@ -24,8 +24,36 @@ class BookmarksController extends Controller
      */
     public function index()
     {
-        $bookmarks = Bookmark::orderBy('created_at','desc')->paginate(10);
-        return view('bookmarks.index')->with('bookmarks', $bookmarks);
+        return view('bookmarks.index');
+    }
+    
+    /**
+     * Display a listing of the resource.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getMany(Request $request)
+    {
+        if (!empty($request->input('searchTerm'))) {
+
+            switch ($request->input('searchColumn')) {
+                case 'title':
+                    $bookmarks = Bookmark::orderBy('created_at','desc')->where('title', 'like', '%' . $request->input('searchTerm') . '%')->paginate(10);
+                    break;
+                
+                case 'url':
+                    $bookmarks = Bookmark::orderBy('created_at','desc')->where('url', 'like', '%' . $request->input('searchTerm') . '%')->paginate(10);
+                    break;
+
+                default:
+                    $bookmarks = Bookmark::orderBy('created_at','desc')->where('title', 'like', '%' . $request->input('searchTerm') . '%')->paginate(10);
+                    break;
+            }
+        } else {
+            $bookmarks = Bookmark::orderBy('created_at','desc')->paginate(10);
+        }
+        return response()->json($bookmarks);
     }
 
     /**
