@@ -85,7 +85,7 @@ class BookmarksController extends Controller
         $bookmark->user_id = auth()->user()->id;
         $bookmark->save();
 
-        return redirect('/bookmarks/create')->with('success', 'Bookmark was created');
+        return redirect('/bookmarks')->with('success', 'Bookmark was created');
     }
 
     /**
@@ -96,7 +96,7 @@ class BookmarksController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect('/bookmarks');
     }
 
     /**
@@ -107,7 +107,8 @@ class BookmarksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $bookmark = Bookmark::find($id);
+        return view('bookmarks.edit')->with('bookmark', $bookmark);
     }
 
     /**
@@ -119,7 +120,17 @@ class BookmarksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'url' => 'required|url',
+            'title' => 'required'
+        ]);
+
+        $bookmark = Bookmark::find($id);
+        $bookmark->url = $request->input('url');
+        $bookmark->title = $request->input('title');
+        $bookmark->save();
+
+        return redirect('/bookmarks')->with('success', 'Post Updated');
     }
 
     /**
