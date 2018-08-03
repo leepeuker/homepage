@@ -2,14 +2,29 @@ $(document).ready(function() {
 
     ajaxCall();
     
-    $("#searchTerm").on('input', function() {
+    $("#input_searchTerm").on('input', function() {
+        ajaxCall();
+    });
+    
+    $("#select_searchTerm").on('change', function(e) {
         ajaxCall();
     });
 
-    $("#searchColumn").on('change', function() {
+    $("#select_searchColumn").on('change', function(e) {
+
+        if (this.value == 'keywords') {
+            $('#select_searchTerm').chosen();
+            $('#select_searchTerm').css( "display", "none" );
+            $('#input_searchTerm').css( "display", "none" );
+            $('#input_searchTerm').css( "display", "none" );
+        } else {
+            $("#select_searchTerm").chosen("destroy");
+            $('#select_searchTerm').css( "display", "none" );
+            $('#input_searchTerm').css( "display", "" );
+        }
+        
         ajaxCall();
     });
-
 });
 
 function generateBookmark(data) {
@@ -36,8 +51,9 @@ function ajaxCall() {
         url: "/bookmarks/getMany",
         type: "POST",
         data: {
-            searchTerm: $("#searchTerm").val(),
-            searchColumn: $("#searchColumn").val()
+            searchTerm: $("#input_searchTerm").val(),
+            keywords: $("#select_searchTerm").val(),
+            searchColumn: $("#select_searchColumn").val()
         },
         headers:
         {

@@ -11,5 +11,10 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+// mix.react('resources/assets/js/app.js', 'public/js')
+//    .sass('resources/assets/sass/app.scss', 'public/css');
+
+mix.scripts('node_modules/chosen-js/chosen.jquery.min.js', 'public/js/chosen.js');
+mix.styles([
+    'node_modules/bootstrap4c-chosen/dist/css/component-chosen.min.css' 
+], 'public/css/chosen.css');

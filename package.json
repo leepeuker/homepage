@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.18",
-        "babel-preset-react": "^6.23.0",
+        "babel-preset-react": "^6.24.1",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
         "jquery": "^3.2",
@@ -20,5 +20,9 @@
         "popper.js": "^1.12",
         "react": "^16.2.0",
         "react-dom": "^16.2.0"
+    },
+    "dependencies": {
+        "bootstrap4c-chosen": "^1.0.10",
+        "chosen-js": "^1.8.7"
     }
 }

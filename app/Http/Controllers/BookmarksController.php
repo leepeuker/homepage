@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Keywords;
 use App\Bookmark;
+use App\BookmarksToKeywords;
 
 class BookmarksController extends Controller
 {
@@ -24,7 +26,9 @@ class BookmarksController extends Controller
      */
     public function index()
     {
-        return view('bookmarks.index');
+        $keywords = Keywords::orderBy('created_at','desc')->get();
+
+        return view('bookmarks.index')->with('keywords', $keywords);
     }
     
     /**
@@ -47,12 +51,14 @@ class BookmarksController extends Controller
                     break;
 
                 default:
-                    $bookmarks = Bookmark::orderBy('created_at','desc')->where('title', 'like', '%' . $request->input('searchTerm') . '%')->paginate(10);
+                    $bookmarks = Bookmark::orderBy('created_at','desc')->paginate(10);
                     break;
             }
+            
         } else {
             $bookmarks = Bookmark::orderBy('created_at','desc')->paginate(10);
         }
+
         return response()->json($bookmarks);
     }
 
@@ -63,7 +69,9 @@ class BookmarksController extends Controller
      */
     public function create()
     {
-        return view('bookmarks.create');
+        $keywords = Keywords::orderBy('word','desc')->get();
+
+        return view('bookmarks.create')->with('keywords', $keywords);
     }
 
     /**
@@ -84,6 +92,13 @@ class BookmarksController extends Controller
         $bookmark->title = $request->input('title');
         $bookmark->user_id = auth()->user()->id;
         $bookmark->save();
+
+        foreach ($request->input('keywords') as $keyword_id) {
+            $bookmarksToKeywords = new BookmarksToKeywords;
+            $bookmarksToKeywords->bookmark_id = $bookmark->id;
+            $bookmarksToKeywords->keyword_id = $keyword_id;
+            $bookmarksToKeywords->save();
+        }
 
         return redirect('/bookmarks')->with('success', 'Bookmark was created');
     }
@@ -108,8 +123,11 @@ class BookmarksController extends Controller
     public function edit($id)
     {
         $bookmark = Bookmark::find($id);
-        return view('bookmarks.edit')->with('bookmark', $bookmark);
+        $keywords = Keywords::orderBy('word','asc')->get();
+
+        return view('bookmarks.edit')->with('bookmark', $bookmark)->with('keywords', $keywords);
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -130,7 +148,19 @@ class BookmarksController extends Controller
         $bookmark->title = $request->input('title');
         $bookmark->save();
 
-        return redirect('/bookmarks')->with('success', 'Post Updated');
+        BookmarksToKeywords::where('bookmark_id', $id)->delete();
+
+        if ($request->input('keywords')) {
+
+            foreach ($request->input('keywords') as $keyword_id) {
+                $bookmarksToKeywords = new BookmarksToKeywords;
+                $bookmarksToKeywords->bookmark_id = $bookmark->id;
+                $bookmarksToKeywords->keyword_id = $keyword_id;
+                $bookmarksToKeywords->save();
+            }
+        }
+
+        return redirect('/bookmarks')->with('success', 'Bookmark Updated');
     }
 
     /**
@@ -143,12 +173,13 @@ class BookmarksController extends Controller
     {
         $bookmark = Bookmark::find($id);
         
-        // Check for correct user
         if(auth()->user()->admin){
+
             return redirect('/bookmarks')->with('error', 'Unauthorized Page');
         }
 
         $bookmark->delete();
+        
         return redirect('/bookmarks')->with('success', 'Bookmark "'. $bookmark->title .'" deleted.');
     }
 }
