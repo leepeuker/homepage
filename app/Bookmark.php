@@ -11,6 +11,6 @@ class Bookmark extends Model
      */
     public function keywords()
     {
-        return $this->belongsToMany('App\Keywords', 'bookmarks_to_keywords', 'bookmark_id', 'keyword_id');
+        return $this->belongsToMany('App\Keyword');
     }
 }

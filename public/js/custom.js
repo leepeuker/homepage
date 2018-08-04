@@ -13,7 +13,9 @@ $(document).ready(function() {
     $("#select_searchColumn").on('change', function(e) {
 
         if (this.value == 'keywords') {
-            $('#select_searchTerm').chosen();
+            $('#select_searchTerm').chosen({
+                placeholder_text_multiple: ' '
+            });
             $('#select_searchTerm').css( "display", "none" );
             $('#input_searchTerm').css( "display", "none" );
             $('#input_searchTerm').css( "display", "none" );
@@ -28,7 +30,13 @@ $(document).ready(function() {
 });
 
 function generateBookmark(data) {
-    
+
+    let keywords = '';
+
+    $.each(data.keywords, function(index, keyword) {
+        keywords += '<span class="index-keyword">'+keyword.word+'</span>'
+    });
+
     return bookmarkCard = `
     <div class="card" style="background-color: rgba(255,255,255,0.5);">
         <div class="card-body" style="display:inline">
@@ -40,7 +48,7 @@ function generateBookmark(data) {
             </form>
             <h3><a href="${data.url}" target="_blank">${data.title}</a></h3>
             <small>${data.url}</small>
-            <p style="margin-bottom:0px;margin-top:5px;cursor:pointer">github &nbsp nodejs &nbsp rest-api</p>
+            <p style="margin-bottom:0px;margin-top:10px;">${keywords}</p>
         </div>
     </div>
     <br>`;

@@ -1,0 +1,28 @@
+.chosen-container-multi .chosen-choices {
+    border-top-left-radius: .25rem !important;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: .25rem !important;
+    border-bottom-right-radius: 0px;
+}
+.chosen-container {
+    font-size:0.9rem;
+    line-height:1.6 !important;
+}
+.chosen-choices {
+    height:37px !important;
+}
+
+.index-keyword {
+    color:#4e5256;
+    background-color:#f3f5f7;
+    font-family: "Raleway", sans-serif;
+    font-size: .7rem;
+    border:1px solid #ced4da;
+    padding:.25rem .25rem .25rem .25rem;
+    margin-right:.5rem;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+    cursor: pointer;
+}

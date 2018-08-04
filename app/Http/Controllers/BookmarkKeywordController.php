@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class BookmarksToKeywordsController extends Controller
+class BookmarkKeywordController extends Controller
 {
     /**
      * Display a listing of the resource.
