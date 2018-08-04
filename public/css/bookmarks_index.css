@@ -28,7 +28,25 @@
 }
 
 .form-control {
-    
+    border-top-left-radius: .25rem !important;
+    border-top-right-radius: .25rem !important;
+    border-bottom-left-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 2px
+}
+
+#link_add {
+    margin-left:5px;
+    background-color:white;
+    border:1px solid #ced4da;
     border-top-left-radius: .25rem !important;
     border-top-right-radius: .25rem !important;
     border-bottom-left-radius: .25rem !important;

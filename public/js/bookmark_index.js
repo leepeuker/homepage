@@ -3,14 +3,14 @@ let current_page = 1;
 ajaxCall();
 
 $("#input_searchTerm").on('input', function() {
+    $("#bookmark_list").empty();
     current_page = 1;
-    $("#test1").empty();
     ajaxCall();
 });
 
 $("#select_searchTerm").on('change', function(e) {
     current_page = 1;
-    $("#test1").empty();
+    $("#bookmark_list").empty();
     ajaxCall();
 });
 
@@ -36,7 +36,8 @@ $("#select_searchColumn").on('change', function(e) {
     }
     
     current_page = 1;
-    $("#test1").empty();
+
+    $("#bookmark_list").empty();
     ajaxCall();
 });
 
@@ -56,16 +57,23 @@ function ajaxCall() {
         },
         dataType: "JSON",
         success: function (bookmarks) {
-            console.log(bookmarks.last_page);
+            
             $("#btn_more").remove();
 
             for (i = 0; i < bookmarks.data.length; i++) { 
-                $("#test1").append( generateBookmark(bookmarks.data[i]));
+                $("#bookmark_list").append( generateBookmark(bookmarks.data[i]));
             }
 
             if (current_page < bookmarks.last_page) {
                 
-                $("#test1").append('<button type="button" class="btn btn-dark float-right" onclick="ajaxCall()" id="btn_more"><img src="http://blog.local/images/expand.png" style="color:white; width:20px"></img></button>');
+                $("#bookmark_list").append(`
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-dark float-right" title="Load more bookmarks" onclick="ajaxCall()" id="btn_more">
+                            <img src="${$(location).attr('protocol')}//${$(location).attr('hostname')}/images/expand.png" style="color:white; width:20px">
+                        </button>
+                    </div>
+                </div>`);
             }
 
             current_page++;
@@ -91,15 +99,15 @@ function generateBookmark(data) {
     return bookmarkCard = `
     <div class="card" style="background-color: rgba(255,255,255,0.5);">
         <div class="card-body" style="display:inline">
-            <a class="btn btn-info float-right" href="${$(location).attr('protocol')}//${$(location).attr('hostname')}/bookmarks/${data.id}/edit" style="color:white;margin-top:10px">Edit</a>
+            <a class="btn btn-light btn-sm float-right" title="Edit this bookmark" href="${$(location).attr('protocol')}//${$(location).attr('hostname')}/bookmarks/${data.id}/edit" style="border:1px solid rgba(0, 0, 0, 0.125);"><img src="${$(location).attr('protocol')}//${$(location).attr('hostname')}/images/menu.png" style="height:18px"></a>
             <form method="POST" action="${$(location).attr('protocol')}//${$(location).attr('hostname')}/bookmarks/${data.id}"">
                 <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
                 <input type="hidden" name="_method" value="DELETE">
-                <button type="submit" class="btn btn-danger float-right" style="color:white;margin-top:10px;margin-right:10px">Delete</button>
+                <button type="submit" title="Delete this bookmark" class="btn btn-danger btn-sm float-right" style="color:white;margin-right:10px"><img src="${$(location).attr('protocol')}//${$(location).attr('hostname')}/images/delete-white.png" style="height:18px"></button>
             </form>
             <h3><a href="${data.url}" target="_blank">${data.title}</a></h3>
             <small>${data.url}</small>
-            <p style="margin-bottom:0px;margin-top:10px;">${keywordString}</p>
+            <p style="margin-bottom:0px;margin-top:8px;">${keywordString}</p>
         </div>
     </div>
     <br>`;

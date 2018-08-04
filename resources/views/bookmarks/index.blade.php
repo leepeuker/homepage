@@ -27,6 +27,9 @@
                 <option value="url">URL</option>
             </select>
         </div>
+        <div class="input-group-append">
+            <a class="btn btn-light" title="Add new bookmark" id="link_add" href="{{ route('bookmarks.create') }}"><img src="{{ asset('images/add.png') }}" style="color:white; width:18px"></img></a>
+        </div>
     </div>
 
     <br>
@@ -42,8 +45,6 @@
         </div>
     @endif
 
-    <div id="test1"></div>
-
-    <a class="btn btn-primary" href="{{ route('bookmarks.create') }}">Create Bookmark</a>
+    <div id="bookmark_list"></div>
 </div>
 @endsection
