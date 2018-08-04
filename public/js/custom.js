@@ -16,13 +16,13 @@ $(document).ready(function() {
             $('#select_searchTerm').chosen({
                 placeholder_text_multiple: ' '
             });
-            $('#select_searchTerm').css( "display", "none" );
-            $('#input_searchTerm').css( "display", "none" );
-            $('#input_searchTerm').css( "display", "none" );
+            $('#select_searchTerm').css("display", "none");
+            $('#input_searchTerm').css("display", "none");
+            $('#input_searchTerm').css("display", "none");
         } else {
             $("#select_searchTerm").chosen("destroy");
-            $('#select_searchTerm').css( "display", "none" );
-            $('#input_searchTerm').css( "display", "" );
+            $('#select_searchTerm').css("display", "none");
+            $('#input_searchTerm').css("display", "");
         }
         
         ajaxCall();
@@ -31,10 +31,17 @@ $(document).ready(function() {
 
 function generateBookmark(data) {
 
-    let keywords = '';
+    let keywordString = '';
+    let keywords = [];
 
-    $.each(data.keywords, function(index, keyword) {
-        keywords += '<span class="index-keyword">'+keyword.word+'</span>'
+    data.keywords.forEach(function(keyword) {
+        keywords.push(keyword.word);
+    });
+
+    keywords.sort();
+
+    keywords.forEach(function(keyword) {
+        keywordString += `<span class="index-keyword">${keyword}</span>`
     });
 
     return bookmarkCard = `
@@ -48,7 +55,7 @@ function generateBookmark(data) {
             </form>
             <h3><a href="${data.url}" target="_blank">${data.title}</a></h3>
             <small>${data.url}</small>
-            <p style="margin-bottom:0px;margin-top:10px;">${keywords}</p>
+            <p style="margin-bottom:0px;margin-top:10px;">${keywordString}</p>
         </div>
     </div>
     <br>`;
