@@ -86,18 +86,29 @@ class BookmarksController extends Controller
             'url' => 'required|url',
             'title' => 'required'
         ]);
-
+        
         $bookmark = new Bookmark;
         $bookmark->url = $request->input('url');
         $bookmark->title = $request->input('title');
         $bookmark->user_id = auth()->user()->id;
         $bookmark->save();
 
-        foreach ($request->input('keywords') as $keyword_id) {
-            $bookmarksToKeywords = new BookmarksToKeywords;
-            $bookmarksToKeywords->bookmark_id = $bookmark->id;
-            $bookmarksToKeywords->keyword_id = $keyword_id;
-            $bookmarksToKeywords->save();
+        if ($request->input('keywords')) {
+
+            foreach ($request->input('keywords') as $keyword_id) {
+
+                if (substr($keyword_id, 0, 2) === '__') {
+                    $keyword = new Keywords;
+                    $keyword->word = substr($keyword_id, 2);
+                    $keyword->save();
+                    $keyword_id = $keyword->id;
+                }
+
+                $bookmarksToKeywords = new BookmarksToKeywords;
+                $bookmarksToKeywords->bookmark_id = $bookmark->id;
+                $bookmarksToKeywords->keyword_id = $keyword_id;
+                $bookmarksToKeywords->save();
+            }
         }
 
         return redirect('/bookmarks')->with('success', 'Bookmark was created');
@@ -153,6 +164,14 @@ class BookmarksController extends Controller
         if ($request->input('keywords')) {
 
             foreach ($request->input('keywords') as $keyword_id) {
+                
+                if (substr($keyword_id, 0, 2) === '__') {
+                    $keyword = new Keywords;
+                    $keyword->word = substr($keyword_id, 2);
+                    $keyword->save();
+                    $keyword_id = $keyword->id;
+                }
+                
                 $bookmarksToKeywords = new BookmarksToKeywords;
                 $bookmarksToKeywords->bookmark_id = $bookmark->id;
                 $bookmarksToKeywords->keyword_id = $keyword_id;
