@@ -1,8 +1,8 @@
 .chosen-container-multi .chosen-choices {
     border-top-left-radius: .25rem !important;
-    border-top-right-radius: 0px;
+    border-top-right-radius: .25rem;
     border-bottom-left-radius: .25rem !important;
-    border-bottom-right-radius: 0px;
+    border-bottom-right-radius: .25rem;
 }
 .chosen-container {
     font-size:0.9rem;
@@ -25,4 +25,12 @@
     border-bottom-left-radius: .25rem;
     border-bottom-right-radius: .25rem;
     cursor: pointer;
+}
+
+.form-control {
+    
+    border-top-left-radius: .25rem !important;
+    border-top-right-radius: .25rem !important;
+    border-bottom-left-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
 }
