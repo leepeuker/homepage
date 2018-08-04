@@ -1,33 +1,77 @@
-$(document).ready(function() {
+let current_page = 1;
 
+ajaxCall();
+
+$("#input_searchTerm").on('input', function() {
+    current_page = 1;
+    $("#test1").empty();
     ajaxCall();
-    
-    $("#input_searchTerm").on('input', function() {
-        ajaxCall();
-    });
-    
-    $("#select_searchTerm").on('change', function(e) {
-        ajaxCall();
-    });
-
-    $("#select_searchColumn").on('change', function(e) {
-
-        if (this.value == 'keywords') {
-            $('#select_searchTerm').chosen({
-                placeholder_text_multiple: ' '
-            });
-            $('#select_searchTerm').css("display", "none");
-            $('#input_searchTerm').css("display", "none");
-            $('#input_searchTerm').css("display", "none");
-        } else {
-            $("#select_searchTerm").chosen("destroy");
-            $('#select_searchTerm').css("display", "none");
-            $('#input_searchTerm').css("display", "");
-        }
-        
-        ajaxCall();
-    });
 });
+
+$("#select_searchTerm").on('change', function(e) {
+    current_page = 1;
+    $("#test1").empty();
+    ajaxCall();
+});
+
+$("#btn_ajax").click(function() {
+    alert();
+    ajaxCall();
+});
+
+
+$("#select_searchColumn").on('change', function(e) {
+
+    if (this.value == 'keywords') {
+        $('#select_searchTerm').chosen({
+            placeholder_text_multiple: ' '
+        });
+        $('#select_searchTerm').css("display", "none");
+        $('#input_searchTerm').css("display", "none");
+        $('#input_searchTerm').css("display", "none");
+    } else {
+        $("#select_searchTerm").chosen("destroy");
+        $('#select_searchTerm').css("display", "none");
+        $('#input_searchTerm').css("display", "");
+    }
+    
+    current_page = 1;
+    $("#test1").empty();
+    ajaxCall();
+});
+
+function ajaxCall() {
+    
+    $.ajax({
+        url: "/bookmarks/getMany?page="+ current_page,
+        type: "POST",
+        data: {
+            searchTerm: $("#input_searchTerm").val(),
+            keywords: $("#select_searchTerm").val(),
+            searchColumn: $("#select_searchColumn").val()
+        },
+        headers:
+        {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: "JSON",
+        success: function (bookmarks) {
+            console.log(bookmarks.last_page);
+            $("#btn_more").remove();
+
+            for (i = 0; i < bookmarks.data.length; i++) { 
+                $("#test1").append( generateBookmark(bookmarks.data[i]));
+            }
+
+            if (current_page < bookmarks.last_page) {
+                
+                $("#test1").append('<button type="button" class="btn btn-dark float-right" onclick="ajaxCall()" id="btn_more"><img src="http://blog.local/images/expand.png" style="color:white; width:20px"></img></button>');
+            }
+
+            current_page++;
+        }
+    });
+}
 
 function generateBookmark(data) {
 
@@ -59,27 +103,4 @@ function generateBookmark(data) {
         </div>
     </div>
     <br>`;
-}
-
-function ajaxCall() {
-    $.ajax({
-        url: "/bookmarks/getMany",
-        type: "POST",
-        data: {
-            searchTerm: $("#input_searchTerm").val(),
-            keywords: $("#select_searchTerm").val(),
-            searchColumn: $("#select_searchColumn").val()
-        },
-        headers:
-        {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        dataType: "JSON",
-        success: function (bookmarks) {
-            $("#test1").empty();
-            for (i = 0; i < bookmarks.data.length; i++) { 
-                $("#test1").append( generateBookmark(bookmarks.data[i]));
-            }
-        }
-    });
 }
