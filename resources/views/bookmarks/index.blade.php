@@ -6,7 +6,7 @@
 @endsection
 
 @section('custom_js')
-    <script src="{{ asset('js/bookmark_index.js.js') }}" defer></script>
+    <script src="{{ asset('js/bookmark_index.js') }}" defer></script>
     <script src="{{ asset('js/chosen.js') }}" defer></script>
 @endsection
 
