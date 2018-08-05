@@ -15,15 +15,15 @@
 
     <div class="input-group" style="margin-bottom:15px">
         <input type="text" name="search" class="form-control" placeholder="Search" autocomplete="off" id="input_searchTerm">
-        <select class="custom-select" name="keywords[]" multiple="multiple" id="select_searchTerm" style="display:none">
-            @foreach($keywords as $keyword)
-                <option value="{{ $keyword->id }}">{{ $keyword->word }}</option>
+        <select class="custom-select" name="tags[]" multiple="multiple" id="select_searchTerm" style="display:none">
+            @foreach($tags as $tag)
+                <option value="{{ $tag->id }}">{{ $tag->text }}</option>
             @endforeach
         </select>
         <div class="input-group-append">
             <select  class="form-control form-control-chosen" name="searchColumn" id="select_searchColumn" style="margin-left:5px">
                 <option value="title" selected>Title</option>
-                <option value="keywords">Keywords</option>
+                <option value="tags">Tags</option>
                 <option value="url">URL</option>
             </select>
         </div>

@@ -17,11 +17,11 @@ $("#select_searchTerm").on('change', function(e) {
 $("#btn_ajax").click(function() {
     ajaxCall();
 });
-
+console.log('11');
 
 $("#select_searchColumn").on('change', function(e) {
 
-    if (this.value == 'keywords') {
+    if (this.value == 'tags') {
         $('#select_searchTerm').chosen({
             placeholder_text_multiple: ' '
         });
@@ -46,7 +46,7 @@ function ajaxCall(reload = false, page = 1) {
         type: "POST",
         data: {
             searchTerm: $("#input_searchTerm").val(),
-            keywords: $("#select_searchTerm").val(),
+            tags: $("#select_searchTerm").val(),
             searchColumn: $("#select_searchColumn").val()
         },
         headers:
@@ -93,17 +93,17 @@ function ajaxCall(reload = false, page = 1) {
 
 function generateBookmark(data) {
 
-    let keywordString = '';
-    let keywords = [];
+    let tagString = '';
+    let tags = [];
 
-    data.keywords.forEach(function(keyword) {
-        keywords.push(keyword.word);
+    data.tags.forEach(function(tag) {
+        tags.push(tag.text);
     });
 
-    keywords.sort();
+    tags.sort();
 
-    keywords.forEach(function(keyword) {
-        keywordString += `<span class="index-keyword">${keyword}</span>`
+    tags.forEach(function(tag) {
+        tagString += `<span class="index-tag">${tag}</span>`
     });
 
     return bookmarkCard = `
@@ -124,7 +124,7 @@ function generateBookmark(data) {
             </div>
             <h3><a href="${data.url}" target="_blank">${data.title}</a></h3>
             <small>${data.url}</small>
-            <p style="margin-bottom:0px;margin-top:8px;">${keywordString}</p>
+            <p style="margin-bottom:0px;margin-top:8px;">${tagString}</p>
         </div>
     </div>`;
 }

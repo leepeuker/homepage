@@ -1,50 +1,50 @@
-$('#select_keywords').chosen({
-    no_results_text: 'Press spacebar to add new keyword:',
+$('#select_tags').chosen({
+    no_results_text: 'Press spacebar to add new tag:',
     search_contains : true
 });
 
-$("#select_keywords_chosen").keydown(function(e) {
+$("#select_tags_chosen").keydown(function(e) {
     
     if (e.keyCode == 32) {
 
-        let newKeyword = $('.chosen-search-input').val().trim();
-        let selectedKeywords = $("#select_keywords").val();
+        let newTag = $('.chosen-search-input').val().trim();
+        let selectedTags = $("#select_tags").val();
 
-        if (newKeyword.trim() !== '') {
+        if (newTag.trim() !== '') {
 
-            let optionValue = optionTextExists(newKeyword);
+            let optionValue = optionTextExists(newTag);
             
             if (!optionValue) {
                 
-                selectedKeywords.push('__' + newKeyword);
+                selectedTags.push('__' + newTag);
 
-                if($('#select_keywords option[value="__'+ newKeyword +'"]').length == 0) {
+                if($('#select_tags option[value="__'+ newTag +'"]').length == 0) {
 
-                    $("#select_keywords").append('<option value="__'+ newKeyword +'">'+ newKeyword +'</option>');
+                    $("#select_tags").append('<option value="__'+ newTag +'">'+ newTag +'</option>');
                 }
 
             } else {
                 
-                selectedKeywords.push(optionValue);
+                selectedTags.push(optionValue);
             }
 
-            $("#select_keywords").val(selectedKeywords);
-            $("#select_keywords").trigger("chosen:updated");
+            $("#select_tags").val(selectedTags);
+            $("#select_tags").trigger("chosen:updated");
 
-            test = $("#select_keywords").val();
+            test = $("#select_tags").val();
 
         }
     }
 });
 
-// Returns value of option with text matching the keyword or false if no match was found
-function optionTextExists(keyword) {
+// Returns value of option with text matching the tag or false if no match was found
+function optionTextExists(tag) {
 
     let optionExists = false;
     
-    $('#select_keywords option').filter(function() {
+    $('#select_tags option').filter(function() {
         
-        if ($(this).text().trim() === keyword) {
+        if ($(this).text().trim() === tag) {
             optionExists = $(this).val();
         }
 

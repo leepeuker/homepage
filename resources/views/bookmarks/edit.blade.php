@@ -48,16 +48,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="input_title">Keywords</label>
-                    <select class="custom-select" name="keywords[]" multiple="multiple" id="select_keywords" style="display:none">
-                    @foreach($keywords as $keyword)
-                        <option value="{{ $keyword->id }}" @foreach($bookmark->keywords as $bookmarkKeyword) {{ $bookmarkKeyword->id == $keyword->id ? "selected" : "" }} @endforeach>
-                            {{ $keyword->word }}
+                    <label for="select_tags">Tags</label>
+                    <select class="custom-select" name="tags[]" multiple="multiple" id="select_tags" style="display:none" data-placeholder=" ">
+                    @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}" @foreach($bookmark->tags as $bookmarkTag) {{ $bookmarkTag->id == $tag->id ? "selected" : "" }} @endforeach>
+                            {{ $tag->text }}
                         </option>
                     @endforeach
                     </select>
-                    @if ($errors->has('keywords'))
-                        <p style="color:red;font-weight:bold;font-size:14px">{{ $errors->first('keywords') }}</p>
+                    @if ($errors->has('tags'))
+                        <p style="color:red;font-weight:bold;font-size:14px">{{ $errors->first('tags') }}</p>
                     @endif
                 </div>
                 

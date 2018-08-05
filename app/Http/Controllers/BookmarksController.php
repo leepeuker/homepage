@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Keyword;
+use App\Tag;
 use App\Bookmark;
-use App\BookmarkKeyword;
+use App\BookmarkTag;
 
 class BookmarksController extends Controller
 {
@@ -26,9 +26,9 @@ class BookmarksController extends Controller
      */
     public function index()
     {
-        $keywords = Keyword::orderBy('created_at','desc')->get();
+        $tags = Tag::orderBy('created_at','desc')->get();
 
-        return view('bookmarks.index')->with('keywords', $keywords);
+        return view('bookmarks.index')->with('tags', $tags);
     }
     
     /**
@@ -39,51 +39,29 @@ class BookmarksController extends Controller
      */
     public function getMany(Request $request)
     {
-        if (!empty($request->input('searchTerm')) || !empty($request->input('keywords'))) {
+        if (!empty($request->input('searchTerm')) || !empty($request->input('tags'))) {
 
             switch ($request->input('searchColumn')) {
                 case 'title':
-                    $bookmarks = Bookmark::with('keywords')->where('title', 'like', '%' . $request->input('searchTerm') . '%')->orderBy('created_at','desc')->paginate(10);
+                    $bookmarks = Bookmark::with('tags')->where('title', 'like', '%' . $request->input('searchTerm') . '%')->orderBy('created_at','desc')->paginate(10);
                     break;
                 
                 case 'url':
-                    $bookmarks = Bookmark::with('keywords')->orderBy('created_at','desc')->where('url', 'like', '%' . $request->input('searchTerm') . '%')->paginate(10);
+                    $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->where('url', 'like', '%' . $request->input('searchTerm') . '%')->paginate(10);
                     break;
 
-                case 'keywords':
-                
-                    // if ($request->input('keywords') ) {
-
-                    //     foreach ($request->input('keywords') as $keywordId) {
-                
-                    //         $bookmarkKeywords = BookmarkKeyword::where('keyword_id', $keywordId)->get();
-                    //         var_dump($bookmarkKeywords);exit;
-                    //         array_push($bookmarkIds, $bookmarkKeyword->bookmark_id);
-                    //     }
-                    // }
-
-                    // var_dump($bookmarkKeywords);exit;
-
-                    // if ($bookmarkKeywords) {
-
-                    //     $bookmarkIds = [];
-
-                    //     foreach ($bookmarkKeywords as $bookmarkKeyword) {
-            
-                    //         array_push($bookmarkIds, $bookmarkKeyword->bookmark_id);
-                    //     }
-                    // }
-
-                    $bookmarks = Bookmark::with('keywords')->orderBy('created_at','desc')->paginate(10);
+                case 'tags':
+                    // TODO
+                    $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->paginate(10);
                     break;
 
                 default:
-                    $bookmarks = Bookmark::with('keywords')->orderBy('created_at','desc')->paginate(10);
+                    $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->paginate(10);
                     break;
             }
             
         } else {
-            $bookmarks = Bookmark::with('keywords')->orderBy('created_at','desc')->paginate(10);
+            $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->paginate(10);
         }
         
 
@@ -97,9 +75,9 @@ class BookmarksController extends Controller
      */
     public function create()
     {
-        $keywords = Keyword::orderBy('word','desc')->get();
+        $tags = Tag::orderBy('text','desc')->get();
 
-        return view('bookmarks.create')->with('keywords', $keywords);
+        return view('bookmarks.create')->with('tags', $tags);
     }
 
     /**
@@ -121,22 +99,22 @@ class BookmarksController extends Controller
         $bookmark->user_id = auth()->user()->id;
         $bookmark->save();
 
-        $selectedKeywords = $request->input('keywords');
+        $selectedTags = $request->input('tags');
 
-        if ($selectedKeywords) {
+        if ($selectedTags) {
 
-            foreach ($selectedKeywords as $index => $word) {
+            foreach ($selectedTags as $index => $text) {
 
-                if (substr($word, 0, 2) === '__') {
-                    $keyword = new Keyword;
-                    $keyword->word = substr($word, 2);
-                    $keyword->save();
-                    $selectedKeywords[$index] = $keyword->id;
+                if (substr($text, 0, 2) === '__') {
+                    $tag = new Tag;
+                    $tag->text = substr($text, 2);
+                    $tag->save();
+                    $selectedTags[$index] = $tag->id;
                 }
             }
         }
-
-        $bookmark->keywords()->sync($selectedKeywords, false);
+        
+        $bookmark->tags()->sync($selectedTags, false);
         
         return redirect('/bookmarks')->with('success', 'Bookmark was created');
     }
@@ -161,9 +139,9 @@ class BookmarksController extends Controller
     public function edit($id)
     {
         $bookmark = Bookmark::find($id);
-        $keywords = Keyword::orderBy('word','asc')->get();
+        $tags = Tag::orderBy('text','asc')->get();
 
-        return view('bookmarks.edit')->with('bookmark', $bookmark)->with('keywords', $keywords);
+        return view('bookmarks.edit')->with('bookmark', $bookmark)->with('tags', $tags);
     }
     
 
@@ -186,22 +164,22 @@ class BookmarksController extends Controller
         $bookmark->title = $request->input('title');
         $bookmark->save();
 
-        $selectedKeywords = $request->input('keywords');
+        $selectedTags = $request->input('tags');
 
-        if ($selectedKeywords) {
+        if ($selectedTags) {
 
-            foreach ($selectedKeywords as $index => $word) {
+            foreach ($selectedTags as $index => $markedText) {
 
-                if (substr($word, 0, 2) === '__') {
-                    $keyword = new Keyword;
-                    $keyword->word = substr($word, 2);
-                    $keyword->save();
-                    $selectedKeywords[$index] = $keyword->id;
+                if (substr($markedText, 0, 2) === '__') {
+                    $tag = new Tag;
+                    $tag->text = substr($markedText, 2);
+                    $tag->save();
+                    $selectedTags[$index] = $tag->id;
                 }
             }
         }
 
-        $bookmark->keywords()->sync($selectedKeywords);
+        $bookmark->tags()->sync($selectedTags);
 
         return redirect('/bookmarks')->with('success', 'Bookmark Updated');
     }

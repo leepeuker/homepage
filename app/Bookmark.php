@@ -9,8 +9,8 @@ class Bookmark extends Model
     /**
      * The roles that belong to the user.
      */
-    public function keywords()
+    public function tags()
     {
-        return $this->belongsToMany('App\Keyword');
+        return $this->belongsToMany('App\Tag');
     }
 }
