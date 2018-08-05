@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cee23a2528bee764ee6df0130a8126f",
+    "content-hash": "46a456043658bfd5dced045d8c60b781",
     "packages": [
+        {
+            "name": "arthurhoaro/favicon",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ArthurHoaro/favicon.git",
+                "reference": "02163a16798bb024b0a413aa38400226665c1b2a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ArthurHoaro/favicon/zipball/02163a16798bb024b0a413aa38400226665c1b2a",
+                "reference": "02163a16798bb024b0a413aa38400226665c1b2a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8",
+                "weew/helpers-filesystem": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Favicon\\": "src/Favicon/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Shiflett",
+                    "homepage": "http://shiflett.org/"
+                },
+                {
+                    "name": "Arthur Hoaro",
+                    "homepage": "http://hoa.ro"
+                }
+            ],
+            "description": "PHP Library used to discover favicon from given URL",
+            "homepage": "https://github.com/ArthurHoaro/favicon",
+            "keywords": [
+                "favicon",
+                "finder",
+                "icon"
+            ],
+            "time": "2017-04-23T16:00:33+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",

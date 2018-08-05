@@ -17,7 +17,6 @@ $("#select_searchTerm").on('change', function(e) {
 $("#btn_ajax").click(function() {
     ajaxCall();
 });
-console.log('11');
 
 $("#select_searchColumn").on('change', function(e) {
 
@@ -71,7 +70,7 @@ function ajaxCall(reload = false, page = 1) {
             if (page < bookmarks.last_page) {
                 moreBtn = `
                 <button type="button" class="btn btn-dark" title="Load more bookmarks" onclick="ajaxCall(false, ${page+1})" id="btn_more">
-                    <img src="${domain}/images/expand.png" style="color:white; width:20px">
+                    <img src="${domain}/images/expand.png" style="color:white;height:20px;width:20px">
                 </button>`;
             }
 
@@ -96,6 +95,7 @@ function generateBookmark(data) {
     let tagString = '';
     let tags = [];
 
+    // Generate tags string
     data.tags.forEach(function(tag) {
         tags.push(tag.text);
     });
@@ -105,6 +105,15 @@ function generateBookmark(data) {
     tags.forEach(function(tag) {
         tagString += `<span class="index-tag">${tag}</span>`
     });
+    
+    //Generate favicon link
+    let favicon_tag = '';
+    
+    if (data.favicon) {
+        favicon_tag = `${domain}/storage/favicons/${data.favicon}`;
+    } else {
+        favicon_tag = `${domain}/images/default-icon.png`;
+    }
 
     return bookmarkCard = `
     <div class="card" style="background-color: rgba(255,255,255,0.5);margin-bottom:15px">
@@ -122,7 +131,7 @@ function generateBookmark(data) {
                     </form>
                 </div>
             </div>
-            <h3><a href="${data.url}" target="_blank">${data.title}</a></h3>
+            <h3><img src="${favicon_tag}" style="height:13px"> <a href="${data.url}" target="_blank">${data.title}</a></h3>
             <small>${data.url}</small>
             <p style="margin-bottom:0px;margin-top:8px;">${tagString}</p>
         </div>

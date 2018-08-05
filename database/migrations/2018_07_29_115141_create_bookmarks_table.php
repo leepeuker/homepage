@@ -18,6 +18,7 @@ class CreateBookmarksTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('title');
             $table->string('url')->unique();
+            $table->string('favicon')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

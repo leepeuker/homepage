@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Tag;
 use App\Bookmark;
 use App\BookmarkTag;
@@ -98,6 +99,23 @@ class BookmarksController extends Controller
         $bookmark->title = $request->input('title');
         $bookmark->user_id = auth()->user()->id;
         $bookmark->save();
+        
+        $favicon = new \Favicon\Favicon();
+        
+        if ($favicon_url = $favicon->get($request->input('url'))) {
+
+            $favicon_image = file_get_contents($favicon_url);
+
+            $array = explode('.', $favicon_url);
+            $extension = end($array);
+
+            $favicon_file_name = str_random(10) .'.'. $extension;
+
+            Storage::put('public/favicons/'. $favicon_file_name, $favicon_image);
+
+            $bookmark->favicon = $favicon_file_name;
+            $bookmark->save();
+        }
 
         $selectedTags = $request->input('tags');
 
@@ -197,6 +215,11 @@ class BookmarksController extends Controller
         if(auth()->user()->admin){
 
             return redirect('/bookmarks')->with('error', 'Unauthorized Page');
+        }
+
+        if ($bookmark->favicon) {
+
+            Storage::delete('public/favicons/'. $bookmark->favicon);
         }
 
         $bookmark->delete();
