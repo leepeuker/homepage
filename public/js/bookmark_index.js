@@ -1,21 +1,20 @@
-let current_page = 1;
+// On page load +++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+let domain = $(location).attr('protocol') + '//' + $(location).attr('hostname');
 
 ajaxCall();
 
+// Events +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 $("#input_searchTerm").on('input', function() {
-    $("#bookmark_list").empty();
-    current_page = 1;
-    ajaxCall();
+    ajaxCall(true);
 });
 
 $("#select_searchTerm").on('change', function(e) {
-    current_page = 1;
-    $("#bookmark_list").empty();
-    ajaxCall();
+    ajaxCall(true);
 });
 
 $("#btn_ajax").click(function() {
-    alert();
     ajaxCall();
 });
 
@@ -34,17 +33,16 @@ $("#select_searchColumn").on('change', function(e) {
         $('#select_searchTerm').css("display", "none");
         $('#input_searchTerm').css("display", "");
     }
-    
-    current_page = 1;
 
-    $("#bookmark_list").empty();
-    ajaxCall();
+    ajaxCall(true);
 });
 
-function ajaxCall() {
+// Functions ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function ajaxCall(reload = false, page = 1) {
     
     $.ajax({
-        url: "/bookmarks/getMany?page="+ current_page,
+        url: "/bookmarks/getMany?page="+ page,
         type: "POST",
         data: {
             searchTerm: $("#input_searchTerm").val(),
@@ -57,26 +55,38 @@ function ajaxCall() {
         },
         dataType: "JSON",
         success: function (bookmarks) {
-            
-            $("#btn_more").remove();
+
+            if (reload) {
+                $("#bookmark_list").empty();
+            }
+
+            $("#resultManaging").remove();
 
             for (i = 0; i < bookmarks.data.length; i++) { 
-                $("#bookmark_list").append( generateBookmark(bookmarks.data[i]));
+                $("#bookmark_list").append(generateBookmark(bookmarks.data[i]));
             }
 
-            if (current_page < bookmarks.last_page) {
-                
-                $("#bookmark_list").append(`
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <button type="button" class="btn btn-dark float-right" title="Load more bookmarks" onclick="ajaxCall()" id="btn_more">
-                            <img src="${$(location).attr('protocol')}//${$(location).attr('hostname')}/images/expand.png" style="color:white; width:20px">
-                        </button>
+            let moreBtn = '';
+
+            if (page < bookmarks.last_page) {
+                moreBtn = `
+                <button type="button" class="btn btn-dark" title="Load more bookmarks" onclick="ajaxCall(false, ${page+1})" id="btn_more">
+                    <img src="${domain}/images/expand.png" style="color:white; width:20px">
+                </button>`;
+            }
+
+            $("#bookmark_list").append(`
+            <div class="container" id="resultManaging">
+                <div class="row">
+                    <div class="col-sm" style="padding-left:2px">
+                        <small>Displaying ${bookmarks.to} from ${bookmarks.total} bookmarks</small>
                     </div>
-                </div>`);
-            }
-
-            current_page++;
+                    <div class="col-sm text-center">
+                        ${moreBtn} 
+                    </div>
+                    <div class="col-sm"></div>
+                </div>
+            </div>`);
         }
     });
 }
@@ -97,18 +107,24 @@ function generateBookmark(data) {
     });
 
     return bookmarkCard = `
-    <div class="card" style="background-color: rgba(255,255,255,0.5);">
+    <div class="card" style="background-color: rgba(255,255,255,0.5);margin-bottom:15px">
         <div class="card-body" style="display:inline">
-            <a class="btn btn-light btn-sm float-right" title="Edit this bookmark" href="${$(location).attr('protocol')}//${$(location).attr('hostname')}/bookmarks/${data.id}/edit" style="border:1px solid rgba(0, 0, 0, 0.125);"><img src="${$(location).attr('protocol')}//${$(location).attr('hostname')}/images/menu.png" style="height:18px"></a>
-            <form method="POST" action="${$(location).attr('protocol')}//${$(location).attr('hostname')}/bookmarks/${data.id}"">
-                <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
-                <input type="hidden" name="_method" value="DELETE">
-                <button type="submit" title="Delete this bookmark" class="btn btn-danger btn-sm float-right" style="color:white;margin-right:10px"><img src="${$(location).attr('protocol')}//${$(location).attr('hostname')}/images/delete-white.png" style="height:18px"></button>
-            </form>
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:1px solid rgba(0, 0, 0, 0.125);">
+                    <img src="${domain}/images/menu.png" style="height:18px">
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="${domain}/bookmarks/${data.id}/edit">Edit</a>
+                    <form method="POST" action="${domain}/bookmarks/${data.id}"">
+                        <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="dropdown-item" type="submit" style="cursor:pointer">Delete</button>
+                    </form>
+                </div>
+            </div>
             <h3><a href="${data.url}" target="_blank">${data.title}</a></h3>
             <small>${data.url}</small>
             <p style="margin-bottom:0px;margin-top:8px;">${keywordString}</p>
         </div>
-    </div>
-    <br>`;
+    </div>`;
 }

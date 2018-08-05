@@ -13,7 +13,7 @@
 @section('content')
 <div class="container">
 
-    <div class="input-group">
+    <div class="input-group" style="margin-bottom:15px">
         <input type="text" name="search" class="form-control" placeholder="Search" autocomplete="off" id="input_searchTerm">
         <select class="custom-select" name="keywords[]" multiple="multiple" id="select_searchTerm" style="display:none">
             @foreach($keywords as $keyword)
@@ -31,8 +31,6 @@
             <a class="btn btn-light" title="Add new bookmark" id="link_add" href="{{ route('bookmarks.create') }}"><img src="{{ asset('images/add.png') }}" style="color:white; width:18px"></img></a>
         </div>
     </div>
-
-    <br>
         
     @if (session('success'))
         <div class="alert alert-success">
