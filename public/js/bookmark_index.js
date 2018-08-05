@@ -96,15 +96,22 @@ function generateBookmark(data) {
     let tags = [];
 
     // Generate tags string
-    data.tags.forEach(function(tag) {
-        tags.push(tag.text);
-    });
+    if (data.tags.length > 0) {
+        
+        tagString += '<p style="margin-bottom:0px;margin-top:8px;">';
 
-    tags.sort();
+        data.tags.forEach(function(tag) {
+            tags.push(tag.text);
+        });
 
-    tags.forEach(function(tag) {
-        tagString += `<span class="index-tag">${tag}</span>`
-    });
+        tags.sort();
+
+        tags.forEach(function(tag) {
+            tagString += `<span class="index-tag">${tag}</span>`
+        });
+
+        tagString += '</p>';
+    }
     
     //Generate favicon link
     let favicon_tag = '';
@@ -131,9 +138,9 @@ function generateBookmark(data) {
                     </form>
                 </div>
             </div>
-            <h4><img src="${favicon_tag}" style="height:13px;margin-bottom:2px"> <a href="${data.url}" target="_blank">${data.title}</a></h4>
+            <h4><img src="${favicon_tag}" style="height:17px;margin-bottom:4px"> <a href="${data.url}" target="_blank">${data.title}</a></h4>
             <small>${data.url}</small>
-            <p style="margin-bottom:0px;margin-top:8px;">${tagString}</p>
+            ${tagString}
         </div>
     </div>`;
 }
