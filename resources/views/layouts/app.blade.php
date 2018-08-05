@@ -19,7 +19,7 @@
     <div id="app">
         @include('components.navbar')
 
-        <main class="py-4">
+        <main class="py-4" style="padding-bottom:1rem !important">
             @yield('content')
         </main>
     </div>

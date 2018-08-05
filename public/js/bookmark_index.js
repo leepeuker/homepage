@@ -78,7 +78,7 @@ function ajaxCall(reload = false, page = 1) {
             <div class="container" id="resultManaging">
                 <div class="row">
                     <div class="col-sm" style="padding-left:2px">
-                        <small>Displaying ${bookmarks.to} from ${bookmarks.total} bookmarks</small>
+                        <small class="float-left">Displaying ${bookmarks.to} from ${bookmarks.total} bookmarks</small>
                     </div>
                     <div class="col-sm text-center">
                         ${moreBtn} 
