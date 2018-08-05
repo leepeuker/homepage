@@ -131,7 +131,7 @@ function generateBookmark(data) {
                     </form>
                 </div>
             </div>
-            <h4><img src="${favicon_tag}" style="height:13px"> <a href="${data.url}" target="_blank">${data.title}</a></h4>
+            <h4><img src="${favicon_tag}" style="height:13px;margin-bottom:2px"> <a href="${data.url}" target="_blank">${data.title}</a></h4>
             <small>${data.url}</small>
             <p style="margin-bottom:0px;margin-top:8px;">${tagString}</p>
         </div>
