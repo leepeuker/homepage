@@ -6,6 +6,7 @@
 @endsection
 
 @section('custom_js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" defer></script>
     <script src="{{ asset('js/bookmark_index.js') }}" defer></script>
     <script src="{{ asset('js/chosen.js') }}" defer></script>
 @endsection

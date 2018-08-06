@@ -86,6 +86,8 @@ function ajaxCall(reload = false, page = 1) {
                     <div class="col-sm"></div>
                 </div>
             </div>`);
+            
+            markResults();
         }
     });
 }
@@ -138,9 +140,43 @@ function generateBookmark(data) {
                     </form>
                 </div>
             </div>
-            <h4><img src="${favicon_tag}" style="height:17px;margin-bottom:4px"> <a href="${data.url}" target="_blank">${data.title}</a></h4>
-            <small>${data.url}</small>
+            <h4 class="bookmark-title"><img src="${favicon_tag}" style="height:17px;margin-bottom:4px"> <a href="${data.url}" target="_blank" >${data.title}</a></h4>
+            <small class="bookmark-url">${data.url}</small>
             ${tagString}
         </div>
     </div>`;
 }
+
+
+
+function markResults() {
+
+    var search = $("input[name='search']").val();
+    var searchColumn = $("#select_searchColumn").val();
+
+    switch (searchColumn) {
+        
+        case 'title':
+
+            $(".bookmark-title").unmark({
+                done: function() {
+                    $(".bookmark-title").mark(search);
+                }
+            });
+
+            break;
+
+        case 'url':
+
+            $(".bookmark-url").unmark({
+                done: function() {
+                    $(".bookmark-url").mark(search);
+                }
+            });
+            
+            break;
+    
+        default:
+            break;
+    }
+};
