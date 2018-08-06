@@ -106,10 +106,10 @@ class BookmarksController extends Controller
 
             $favicon_image = file_get_contents($favicon_url);
 
-            $array = explode('.', $favicon_url);
-            $extension = end($array);
+            $regex_matches = [];
+            preg_match("/\.(\w+)(\?|$)/", $favicon_url, $regex_matches);
 
-            $favicon_file_name = str_random(10) .'.'. $extension;
+            $favicon_file_name = str_random(10) .'.'. $regex_matches[1];
 
             Storage::put('public/favicons/'. $favicon_file_name, $favicon_image);
 
