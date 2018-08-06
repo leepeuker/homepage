@@ -27,7 +27,7 @@ class BookmarksController extends Controller
      */
     public function index()
     {
-        $tags = Tag::orderBy('created_at','desc')->get();
+        $tags = Tag::orderBy('text','asc')->get();
 
         return view('bookmarks.index')->with('tags', $tags);
     }
@@ -76,7 +76,7 @@ class BookmarksController extends Controller
      */
     public function create()
     {
-        $tags = Tag::orderBy('text','desc')->get();
+        $tags = Tag::orderBy('text','asc')->get();
 
         return view('bookmarks.create')->with('tags', $tags);
     }
