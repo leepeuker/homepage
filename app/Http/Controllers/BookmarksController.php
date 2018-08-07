@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use DB;
 use App\Tag;
 use App\Bookmark;
 use App\BookmarkTag;
@@ -52,8 +53,9 @@ class BookmarksController extends Controller
                     break;
 
                 case 'tags':
-                    // TODO
-                    $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->paginate(10);
+                    $bookmarks = Bookmark::with('tags')->whereHas('tags', function($query) use($request) {
+                        $query->whereIn('id', $request->input('tags'));
+                    })->withCount('tags')->has('tags', '>=', count($request->input('tags')))->orderBy('tags_count', 'desc')->paginate(10);
                     break;
 
                 default:
