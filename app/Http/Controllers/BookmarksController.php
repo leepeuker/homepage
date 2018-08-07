@@ -48,7 +48,7 @@ class BookmarksController extends Controller
                     break;
                 
                 case 'url':
-                    $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->where('url', 'like', '%' . $request->input('searchTerm') . '%')->paginate(10);
+                    $bookmarks = Bookmark::with('tags')->where('url', 'like', '%' . $request->input('searchTerm') . '%')->orderBy('created_at','desc')->paginate(10);
                     break;
 
                 case 'tags':
@@ -98,24 +98,8 @@ class BookmarksController extends Controller
         $bookmark->url = $request->input('url');
         $bookmark->title = $request->input('title');
         $bookmark->user_id = auth()->user()->id;
+        $bookmark->setFavicon($request->input('url'));
         $bookmark->save();
-        
-        $favicon = new \Favicon\Favicon();
-        
-        if ($favicon_url = $favicon->get($request->input('url'))) {
-
-            $favicon_image = file_get_contents($favicon_url);
-
-            $regex_matches = [];
-            preg_match("/\.(\w+)(\?|$)/", $favicon_url, $regex_matches);
-
-            $favicon_file_name = str_random(10) .'.'. $regex_matches[1];
-
-            Storage::put('public/favicons/'. $favicon_file_name, $favicon_image);
-
-            $bookmark->favicon = $favicon_file_name;
-            $bookmark->save();
-        }
 
         $selectedTags = $request->input('tags');
 
