@@ -109,7 +109,7 @@ function generateBookmark(data) {
         tags.sort();
 
         tags.forEach(function(tag) {
-            tagString += `<span class="index-tag">${tag}</span>`
+            tagString += `<span class="index-tag mark-tag">${tag}</span>`
         });
 
         tagString += '</p>';
@@ -140,8 +140,8 @@ function generateBookmark(data) {
                     </form>
                 </div>
             </div>
-            <h4 class="bookmark-title"><img src="${favicon_tag}" style="height:17px;margin-bottom:4px"> <a href="${data.url}" target="_blank" >${data.title}</a></h4>
-            <small class="bookmark-url">${data.url}</small>
+            <h4 class="mark-title"><img src="${favicon_tag}" style="height:17px;margin-bottom:4px"> <a href="${data.url}" target="_blank" >${data.title}</a></h4>
+            <small class="mark-url">${data.url}</small>
             ${tagString}
         </div>
     </div>`;
@@ -157,25 +157,21 @@ function markResults() {
     switch (searchColumn) {
         
         case 'title':
-
-            $(".bookmark-title").unmark({
+            $(".mark-title").unmark({
                 done: function() {
-                    $(".bookmark-title").mark(search);
+                    $(".mark-title").mark(search);
                 }
             });
-
             break;
 
         case 'url':
-
-            $(".bookmark-url").unmark({
+            $(".mark-url").unmark({
                 done: function() {
-                    $(".bookmark-url").mark(search);
+                    $(".mark-url").mark(search);
                 }
             });
-            
             break;
-    
+
         default:
             break;
     }
