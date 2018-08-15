@@ -53,17 +53,23 @@ class BookmarksController extends Controller
                     break;
 
                 case 'tags':
-                    $query = Bookmark::query();
+                    if (!empty($request->input('tags'))) {
 
-                    foreach ($request->input('tags') as $tag_id) {
+                        $query = Bookmark::query();
 
-                        $query->whereHas('tags', function($q) use ($tag_id) {
+                        foreach ($request->input('tags') as $tag_id) {
 
-                            $q->where('tag_id', $tag_id);
-                        });
+                            $query->whereHas('tags', function($q) use ($tag_id) {
+
+                                $q->where('tag_id', $tag_id);
+                            });
+                        }
+                        $bookmarks = $query->with('tags')->paginate(10);
+                        
+                    } else {
+
+                        $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->paginate(10);
                     }
-
-                    $bookmarks = $query->with('tags')->paginate(10);
                     break;
 
                 default:
