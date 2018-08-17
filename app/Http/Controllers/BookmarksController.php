@@ -106,7 +106,7 @@ class BookmarksController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'url' => 'required|url',
+            'url' => 'required|unique:bookmarks|url',
             'title' => 'required'
         ]);
         

@@ -133,7 +133,7 @@ function generateBookmark(data) {
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="${domain}/bookmarks/${data.id}/edit">Edit</a>
-                    <form method="POST" action="${domain}/bookmarks/${data.id}"">
+                    <form method="POST" action="${domain}/bookmarks/${data.id}">
                         <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
                         <input type="hidden" name="_method" value="DELETE">
                         <button class="dropdown-item" type="submit" style="cursor:pointer">Delete</button>
