@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use Model;
 use App\Tag;
 use App\Bookmark;
 use App\BookmarkTag;
@@ -28,7 +29,7 @@ class BookmarksController extends Controller
      */
     public function index()
     {
-        $tags = Tag::orderBy('text','asc')->get();
+        $tags = DB::select('SELECT DISTINCT tags.id, tags.text FROM tags JOIN bookmark_tag ON bookmark_tag.tag_id = tags.id ORDER BY tags.text ASC');
 
         return view('bookmarks.index')->with('tags', $tags);
     }
@@ -64,7 +65,8 @@ class BookmarksController extends Controller
                                 $q->where('tag_id', $tag_id);
                             });
                         }
-                        $bookmarks = $query->with('tags')->paginate(10);
+                        
+                        $bookmarks = $query->with('tags')->orderBy('created_at','desc')->paginate(10);
                         
                     } else {
 
@@ -212,9 +214,9 @@ class BookmarksController extends Controller
     {
         $bookmark = Bookmark::find($id);
         
-        if(auth()->user()->admin){
+        if(!auth()->user()->admin){
 
-            return redirect('/bookmarks')->with('error', 'Unauthorized Page');
+            return redirect('/bookmarks')->with('warning', 'Not authorized to delete bookmark');
         }
 
         if ($bookmark->favicon) {

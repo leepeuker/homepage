@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Bookmark extends Model
 {
     /**
-     * The roles that belong to the user.
+     * The tags that belong to the bookmark
      */
     public function tags()
     {
