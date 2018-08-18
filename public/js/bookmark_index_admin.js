@@ -70,7 +70,7 @@ function ajaxCall(reload = false, page = 1) {
             if (page < bookmarks.last_page) {
                 moreBtn = `
                 <button type="button" class="btn btn-dark" title="Load more bookmarks" onclick="ajaxCall(false, ${page+1})" id="btn_more">
-                    <img src="${domain}/images/expand.png" style="color:white;height:20px;width:20px">
+                    <img src="${domain}/images/expand-more-white.png" style="color:white;height:20px;width:20px">
                 </button>`;
             }
 
