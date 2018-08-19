@@ -1,8 +1,8 @@
 .chosen-container-multi .chosen-choices {
     border-top-left-radius: .25rem !important;
-    border-top-right-radius: .25rem;
+    border-top-right-radius: .25rem !important;
     border-bottom-left-radius: .25rem !important;
-    border-bottom-right-radius: .25rem;
+    border-bottom-right-radius: .25rem !important;
 }
 .chosen-container {
     font-size:0.9rem;
@@ -43,14 +43,18 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 2px
 }
 
-#link_add {
-    margin-left:5px;
+#link_add, #btn_expand {
+    margin-left: 5px;
     background-color:white;
-    border:1px solid #ced4da;
+    border: 1px solid #ced4da;
     border-top-left-radius: .25rem !important;
     border-top-right-radius: .25rem !important;
     border-bottom-left-radius: .25rem !important;
     border-bottom-right-radius: .25rem !important;
+}
+
+#btn_expand img {
+    width: 18px;
 }
 
 mark {
@@ -58,4 +62,12 @@ mark {
     color:black;
     padding:0;
     margin:0;
+}
+
+.pt-4, .py-4 {
+    padding-top: 1rem !important;
+}
+
+#select_searchColumn {
+    margin-left: 5px;
 }

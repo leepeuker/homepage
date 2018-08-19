@@ -42,47 +42,37 @@ class BookmarksController extends Controller
      */
     public function getMany(Request $request)
     {
-        if (!empty($request->input('searchTerm')) || !empty($request->input('tags'))) {
-
-            switch ($request->input('searchColumn')) {
-                case 'title':
-                    $bookmarks = Bookmark::with('tags')->where('title', 'like', '%' . $request->input('searchTerm') . '%')->orderBy('created_at','desc')->paginate(10);
-                    break;
-                
-                case 'url':
-                    $bookmarks = Bookmark::with('tags')->where('url', 'like', '%' . $request->input('searchTerm') . '%')->orderBy('created_at','desc')->paginate(10);
-                    break;
-
-                case 'tags':
-                    if (!empty($request->input('tags'))) {
-
-                        $query = Bookmark::query();
-
-                        foreach ($request->input('tags') as $tag_id) {
-
-                            $query->whereHas('tags', function($q) use ($tag_id) {
-
-                                $q->where('tag_id', $tag_id);
-                            });
-                        }
-                        
-                        $bookmarks = $query->with('tags')->orderBy('created_at','desc')->paginate(10);
-                        
-                    } else {
-
-                        $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->paginate(10);
-                    }
-                    break;
-
-                default:
-                    $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->paginate(10);
-                    break;
-            }
-            
-        } else {
-            $bookmarks = Bookmark::with('tags')->orderBy('created_at','desc')->paginate(10);
-        }
+        // Get base query
+        $query = Bookmark::query();
         
+        // Add tags to query
+        if (!empty($request->input('tags'))) {
+
+            foreach ($request->input('tags') as $tag_id) {
+
+                $query->whereHas('tags', function($q) use ($tag_id) {
+
+                    $q->where('tag_id', $tag_id);
+                });
+            }
+        }
+
+        // Add searchterm to query
+        if (!empty($request->input('searchTerm'))) {
+            
+            if ($request->input('searchColumn') == 'title') {
+
+                $query ->where('title', 'like', '%' . $request->input('searchTerm') . '%');
+            }
+
+            if ($request->input('searchColumn') == 'url') {
+
+                $query ->where('url', 'like', '%' . $request->input('searchTerm') . '%');
+            }
+        }
+            
+        // Execute query
+        $bookmarks = $query->with('tags')->orderBy('created_at','desc')->paginate(10);
 
         return response()->json($bookmarks);
     }

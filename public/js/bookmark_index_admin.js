@@ -6,38 +6,45 @@ ajaxCall();
 
 // Events +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// Reload bookmark data when the search input value changes
 $("#input_searchTerm").on('input', function() {
     ajaxCall(true);
 });
 
-$("#select_searchTerm").on('change', function(e) {
+// Reload bookmark data when the search column select value changes
+$("#select_searchColumn").on('change', function(e) {
     ajaxCall(true);
 });
 
-$("#btn_ajax").click(function() {
-    ajaxCall();
+// Reload bookmark data when the tag chosen select value changes
+$("#select_searchTag").on('change', function(e) {
+    ajaxCall(true);
 });
 
-$("#select_searchColumn").on('change', function(e) {
+// Expand/contract the search section
+$("#btn_expand").click(function() {
+    
+    if (!$('#select_searchTag_chosen').length) {
 
-    if (this.value == 'tags') {
-        $('#select_searchTerm').chosen({
+        $('#select_searchTag').chosen({
             placeholder_text_multiple: ' '
         });
-        $('#select_searchTerm').css("display", "none");
-        $('#input_searchTerm').css("display", "none");
-        $('#input_searchTerm').css("display", "none");
-    } else {
-        $("#select_searchTerm").chosen("destroy");
-        $('#select_searchTerm').css("display", "none");
-        $('#input_searchTerm').css("display", "");
-    }
+        $('#select_searchTag').css("display", "none");
+        $('#select_div').css("margin-top", "15px");
+        $('#select_div').css("display", "");
 
-    ajaxCall(true);
+    } else {
+
+        $("#select_searchTag").chosen("destroy");
+        $('#select_searchTag').css("display", "none");
+        $('#select_div').css("margin-top", "0");
+        $('#select_div').css("display", "none");
+    }
 });
 
 // Functions ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// Load the bookmark data from the server
 function ajaxCall(reload = false, page = 1) {
     
     $.ajax({
@@ -45,13 +52,10 @@ function ajaxCall(reload = false, page = 1) {
         type: "POST",
         data: {
             searchTerm: $("#input_searchTerm").val(),
-            tags: $("#select_searchTerm").val(),
-            searchColumn: $("#select_searchColumn").val()
+            searchColumn: $("#select_searchColumn").val(),
+            tags: $("#select_searchTag").val()
         },
-        headers:
-        {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         dataType: "JSON",
         success: function (bookmarks) {
 
@@ -88,32 +92,18 @@ function ajaxCall(reload = false, page = 1) {
             </div>`);
             
             markResults();
+        },
+        error: function () {
+            $("#bookmark_list").empty();
+            $("#bookmark_list").append(`Oh shit, bookmarks could not be loaded. Try to refresh the page.`);
         }
     });
 }
 
+// Generate a bookmark div
 function generateBookmark(data) {
 
-    let tagString = '';
-    let tags = [];
-
-    // Generate tags string
-    if (data.tags.length > 0) {
-        
-        tagString += '<p style="margin-bottom:0px;margin-top:8px;">';
-
-        data.tags.forEach(function(tag) {
-            tags.push(tag.text);
-        });
-
-        tags.sort();
-
-        tags.forEach(function(tag) {
-            tagString += `<span class="index-tag mark-tag">${tag}</span>`
-        });
-
-        tagString += '</p>';
-    }
+    let tagHTML = generateTagHTML(data.tags);
     
     //Generate favicon link
     let favicon_tag = '';
@@ -142,37 +132,57 @@ function generateBookmark(data) {
             </div>
             <h4 class="mark-title"><img src="${favicon_tag}" style="height:17px;margin-bottom:4px"> <a href="${data.url}" target="_blank" >${data.title}</a></h4>
             <small class="mark-url">${data.url}</small>
-            ${tagString}
+            ${tagHTML}
         </div>
     </div>`;
 }
 
+// Generate tag html for bookmark out of array of tags
+function generateTagHTML(tags) {
+    
+    let html = '';
+    let tag_names = [];
 
+    if (tags.length > 0) {
+        
+        html += '<p style="margin-bottom:0px;margin-top:8px;">';
 
+        tags.forEach(function(tag) {
+            tag_names.push(tag.text);
+        });
+
+        tag_names.sort();
+
+        tag_names.forEach(function(tag_name) {
+            html += `<span class="index-tag mark-tag">${tag_name}</span>`
+        });
+
+        html += '</p>';
+    }
+
+    return html;
+}
+
+// Mark matching search string depending on which search column is selected
 function markResults() {
 
     var search = $("input[name='search']").val();
     var searchColumn = $("#select_searchColumn").val();
 
-    switch (searchColumn) {
-        
-        case 'title':
-            $(".mark-title").unmark({
-                done: function() {
-                    $(".mark-title").mark(search);
-                }
-            });
-            break;
+    if (searchColumn == 'title') {
 
-        case 'url':
-            $(".mark-url").unmark({
-                done: function() {
-                    $(".mark-url").mark(search);
-                }
-            });
-            break;
+        $(".mark-title").unmark({
+            done: function() {
+                $(".mark-title").mark(search);
+            }
+        });
 
-        default:
-            break;
+    } else {
+
+        $(".mark-url").unmark({
+            done: function() {
+                $(".mark-url").mark(search);
+            }
+        });
     }
 };
