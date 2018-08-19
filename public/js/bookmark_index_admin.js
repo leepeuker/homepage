@@ -95,7 +95,7 @@ function ajaxCall(reload = false, page = 1) {
         },
         error: function () {
             $("#bookmark_list").empty();
-            $("#bookmark_list").append(`Oh shit, bookmarks could not be loaded. Try to refresh the page.`);
+            $("#bookmark_list").append('Oh no, the bookmarks could not be loaded. Try to reload the page.');
         }
     });
 }

@@ -97,36 +97,41 @@ class BookmarksController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'url' => 'required|unique:bookmarks|url',
-            'title' => 'required'
-        ]);
-        
-        $bookmark = new Bookmark;
-        $bookmark->url = $request->input('url');
-        $bookmark->title = $request->input('title');
-        $bookmark->user_id = auth()->user()->id;
-        $bookmark->setFavicon($request->input('url'));
-        $bookmark->save();
+        if(auth()->user()->admin) {
+            
+            $this->validate($request, [
+                'url' => 'required|unique:bookmarks|url',
+                'title' => 'required'
+            ]);
+            
+            $bookmark = new Bookmark;
+            $bookmark->url = $request->input('url');
+            $bookmark->title = $request->input('title');
+            $bookmark->user_id = auth()->user()->id;
+            $bookmark->setFavicon($request->input('url'));
+            $bookmark->save();
 
-        $selectedTags = $request->input('tags');
+            $selectedTags = $request->input('tags');
 
-        if ($selectedTags) {
+            if ($selectedTags) {
 
-            foreach ($selectedTags as $index => $text) {
+                foreach ($selectedTags as $index => $text) {
 
-                if (substr($text, 0, 2) === '__') {
-                    $tag = new Tag;
-                    $tag->text = substr($text, 2);
-                    $tag->save();
-                    $selectedTags[$index] = $tag->id;
+                    if (substr($text, 0, 2) === '__') {
+                        $tag = new Tag;
+                        $tag->text = substr($text, 2);
+                        $tag->save();
+                        $selectedTags[$index] = $tag->id;
+                    }
                 }
             }
+            
+            $bookmark->tags()->sync($selectedTags, false);
+            
+            return redirect('/bookmarks')->with('success', 'Bookmark was created');
         }
-        
-        $bookmark->tags()->sync($selectedTags, false);
-        
-        return redirect('/bookmarks')->with('success', 'Bookmark was created');
+
+        return redirect('/bookmarks')->with('warning', 'Not authorized to create bookmark');
     }
 
     /**
@@ -164,34 +169,39 @@ class BookmarksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'url' => 'required|url',
-            'title' => 'required'
-        ]);
+        if(auth()->user()->admin) {
+            
+            $this->validate($request, [
+                'url' => 'required|url',
+                'title' => 'required'
+            ]);
 
-        $bookmark = Bookmark::find($id);
-        $bookmark->url = $request->input('url');
-        $bookmark->title = $request->input('title');
-        $bookmark->save();
+            $bookmark = Bookmark::find($id);
+            $bookmark->url = $request->input('url');
+            $bookmark->title = $request->input('title');
+            $bookmark->save();
 
-        $selectedTags = $request->input('tags');
+            $selectedTags = $request->input('tags');
 
-        if ($selectedTags) {
+            if ($selectedTags) {
 
-            foreach ($selectedTags as $index => $markedText) {
+                foreach ($selectedTags as $index => $markedText) {
 
-                if (substr($markedText, 0, 2) === '__') {
-                    $tag = new Tag;
-                    $tag->text = substr($markedText, 2);
-                    $tag->save();
-                    $selectedTags[$index] = $tag->id;
+                    if (substr($markedText, 0, 2) === '__') {
+                        $tag = new Tag;
+                        $tag->text = substr($markedText, 2);
+                        $tag->save();
+                        $selectedTags[$index] = $tag->id;
+                    }
                 }
             }
+
+            $bookmark->tags()->sync($selectedTags);
+
+            return redirect('/bookmarks')->with('success', 'Bookmark Updated');
         }
 
-        $bookmark->tags()->sync($selectedTags);
-
-        return redirect('/bookmarks')->with('success', 'Bookmark Updated');
+        return redirect('/bookmarks')->with('warning', 'Not authorized to update bookmark');
     }
 
     /**
@@ -202,20 +212,20 @@ class BookmarksController extends Controller
      */
     public function destroy($id)
     {
-        $bookmark = Bookmark::find($id);
-        
-        if(!auth()->user()->admin){
+        if(auth()->user()->admin) {
 
-            return redirect('/bookmarks')->with('warning', 'Not authorized to delete bookmark');
+            $bookmark = Bookmark::find($id);
+
+            if ($bookmark->favicon) {
+    
+                Storage::delete('public/favicons/'. $bookmark->favicon);
+            }
+    
+            $bookmark->delete();
+            
+            return redirect('/bookmarks')->with('success', 'Bookmark "'. $bookmark->title .'" deleted.');
         }
 
-        if ($bookmark->favicon) {
-
-            Storage::delete('public/favicons/'. $bookmark->favicon);
-        }
-
-        $bookmark->delete();
-        
-        return redirect('/bookmarks')->with('success', 'Bookmark "'. $bookmark->title .'" deleted.');
+        return redirect('/bookmarks')->with('warning', 'Not authorized to delete bookmark');
     }
 }
