@@ -241,7 +241,7 @@
 
                 <h3 class="h6">Send Me A Message</h3>
 
-                <form name="contactForm" id="contactForm" method="post" action="" novalidate="novalidate">
+                <form name="contactForm" id="contactForm" method="POST" action="/contact" novalidate="novalidate">
                     <fieldset>
     
                     <div class="form-field">
@@ -267,7 +267,6 @@
                             </div>
                         </div>
                     </div>
-    
                     </fieldset>
                 </form>
 
@@ -312,13 +311,13 @@
 
                     <ul class="contact-social">
                         <li>
-                            <a href="https://www.xing.com/profile/Lee_Peuker" target="_blank"><i class="fa fa-xing" aria-hidden="true"></i></a>
+                            <a href="https://www.xing.com/profile/Lee_Peuker" target="_blank" title="Xing"><i class="fa fa-xing" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="https://www.linkedin.com/in/lee-peuker-b07757172"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="https://www.linkedin.com/in/lee-peuker-b07757172" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="https://github.com/leepeuker" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+                            <a href="https://github.com/leepeuker" target="_blank" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a>
                         </li>
                     </ul> <!-- end contact-social -->
 

@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'LandingpageController@index');
+Route::post('/contact', 'LandingpageController@contact');
 
 Auth::routes();
 
