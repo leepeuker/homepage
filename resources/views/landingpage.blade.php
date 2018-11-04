@@ -20,7 +20,10 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="css/landingpage.css">
+    <link rel="stylesheet" href="css/landingpage/base.css">
+    <link rel="stylesheet" href="css/landingpage/vendor.css">
+    <link rel="stylesheet" href="css/landingpage/main.css">
+
 
     <!-- script
     ================================================== -->

@@ -18,11 +18,3 @@ mix.scripts('node_modules/chosen-js/chosen.jquery.min.js', 'public/js/chosen.js'
 mix.styles([
     'node_modules/bootstrap4c-chosen/dist/css/component-chosen.min.css' 
 ], 'public/css/chosen.css');
-
-mix.styles([
-    'public/css/landingpage/base.css',
-    'public/css/landingpage/font.css',
-    'public/css/landingpage/main.css',
-    'public/css/landingpage/vendor.css',
-    'public/css/landingpage/font-awesome/css/font-awesome.min.css'
-], 'public/css/landingpage.css');
