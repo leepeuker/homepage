@@ -341,9 +341,9 @@
                     <span>Site Template by <a href="https://www.colorlib.com/">Colorlib</a></span>	
                 </div>
 
-                <div class="go-top">
-                    <a class="smoothscroll" title="Back to Top" href="#top"><i class="icon-arrow-up" aria-hidden="true"></i></a>
-                </div>
+                {{-- <div class="go-top">
+                    <a class="smoothscroll" title="Back to Top" href="#top"></a>
+                </div> --}}
             </div>
 
         </div> <!-- end footer-bottom -->
