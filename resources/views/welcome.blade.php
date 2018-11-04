@@ -20,9 +20,7 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="css/landingpage/base.css">
-    <link rel="stylesheet" href="css/landingpage/vendor.css">
-    <link rel="stylesheet" href="css/landingpage/main.css">
+    <link rel="stylesheet" href="css/landingpage.css">
 
     <!-- script
     ================================================== -->
@@ -167,7 +165,7 @@
                     <h3 class="h2">DevOps</h3>
                     <p>My love for web development does not simply stop at designing and coding solutions.
                     I want to create the perfect environment for developing and deploying web applications.
-                    Time is money, so these proccesses should be simple, fast, scalable and reliable!
+                    Time is money, so these processes should be simple, fast, scalable and reliable!
                     </p>
                 </div>
             </div>
