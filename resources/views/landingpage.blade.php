@@ -51,20 +51,21 @@
                 <h3>Navigation</h3>
                 
                 <ul class="header-nav__list">
-                    <li class="current"><a class="smoothscroll"  href="#home" title="home">Home</a></li>
-                    <li><a class="smoothscroll"  href="#services" title="about">About me</a></li>
-                    <li><a class="smoothscroll"  href="#contact" title="contact">Contact</a></li>
+                    <li class="current"><a class="smoothscroll"  href="#home">Home</a></li>
+                    <li><a class="smoothscroll" href="#services">About me</a></li>
+                    <li><a class="smoothscroll" href="#contact">Contact</a></li>
+                    <li><a class="smoothscroll" href="/login" style="color:grey">Login</a></li>
                 </ul>
     
                 <ul class="header-nav__social">
                     <li>
-                        <a href="https://www.xing.com/profile/Lee_Peuker" target="_blank"><i class="fa fa-xing"></i></a>
+                        <a href="https://www.xing.com/profile/Lee_Peuker" target="_blank" title="Xing"><i class="fa fa-xing"></i></a>
                     </li>
                     <li>
-                        <a href="https://www.linkedin.com/in/lee-peuker-b07757172" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        <a href="https://www.linkedin.com/in/lee-peuker-b07757172" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
                     </li>
                     <li>
-                        <a href="https://github.com/leepeuker" target="_blank"><i class="fa fa-github"></i></a>
+                        <a href="https://github.com/leepeuker" target="_blank" title="Github"><i class="fa fa-github"></i></a>
                     </li>
                 </ul>
 
