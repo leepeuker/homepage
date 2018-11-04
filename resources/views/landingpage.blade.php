@@ -54,7 +54,7 @@
                     <li class="current"><a class="smoothscroll"  href="#home">Home</a></li>
                     <li><a class="smoothscroll" href="#services">About me</a></li>
                     <li><a class="smoothscroll" href="#contact">Contact</a></li>
-                    <li><a class="smoothscroll" href="/login" style="color:grey">Login</a></li>
+                    <li><a href="/login" style="color:grey">Login</a></li>
                 </ul>
     
                 <ul class="header-nav__social">

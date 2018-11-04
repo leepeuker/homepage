@@ -285,6 +285,7 @@
         $('.smoothscroll').on('click', function (e) {
             var target = this.hash,
             $target    = $(target);
+            console.log(target);
             
                 e.preventDefault();
                 e.stopPropagation();
