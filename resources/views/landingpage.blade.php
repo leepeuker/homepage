@@ -302,13 +302,6 @@
                     </div>
 
                     <div class="cinfo">
-                        <h5>Email</h5>
-                        <p>
-                            lee.peuker@protonmail.com
-                        </p>
-                    </div>
-
-                    <div class="cinfo">
                         <h5>Phone</h5>
                         <p>
                             Phone: (+49) 176 30509693
