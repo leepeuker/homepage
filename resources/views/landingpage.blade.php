@@ -261,7 +261,9 @@
                         <textarea name="contactMessage" id="contactMessage" placeholder="Your Message" rows="10" cols="50" required aria-required="true" class="full-width"></textarea>
                     </div>
                     <div class="form-field">
-                        <button class="full-width btn--primary">Submit</button>
+                        <div class="g-recaptcha" data-sitekey="{{env('RECAPTCHA_PUBLIC_KEY')}}" style="padding-top:1.5rem"></div>
+                        <script src="https://www.google.com/recaptcha/api.js"></script>
+                        <button class="full-width btn--primary" style="margin-top:2.5rem">Submit</button>
                         <div class="submit-loader">
                             <div class="text-loader">Sending...</div>
                             <div class="s-loader">
