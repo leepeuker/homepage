@@ -249,16 +249,16 @@
                     <fieldset>
     
                     <div class="form-field">
-                        <input name="contactName" type="text" id="contactName" placeholder="Your Name" value="" minlength="2" required="" aria-required="true" class="full-width">
+                        <input name="contactName" type="text" id="contactName" placeholder="Your Name" value="" minlength="2" required aria-required="true" class="full-width">
                     </div>
                     <div class="form-field">
-                        <input name="contactEmail" type="email" id="contactEmail" placeholder="Your Email" value="" required="" aria-required="true" class="full-width">
+                        <input name="contactEmail" type="email" id="contactEmail" placeholder="Your Email" value="" required aria-required="true" class="full-width">
                     </div>
                     <div class="form-field">
-                        <input name="contactSubject" type="text" id="contactSubject" placeholder="Subject" value="" class="full-width">
+                        <input name="contactSubject" type="text" id="contactSubject" placeholder="Subject" value="" required class="full-width">
                     </div>
                     <div class="form-field">
-                        <textarea name="contactMessage" id="contactMessage" placeholder="Your Message" rows="10" cols="50" required="" aria-required="true" class="full-width"></textarea>
+                        <textarea name="contactMessage" id="contactMessage" placeholder="Your Message" rows="10" cols="50" required aria-required="true" class="full-width"></textarea>
                     </div>
                     <div class="form-field">
                         <button class="full-width btn--primary">Submit</button>
