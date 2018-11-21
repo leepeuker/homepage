@@ -239,7 +239,7 @@
             </div>
         </div>
 
-        <div class="row contact-content" data-aos="fade-up">
+        <div class="row contact-content" data-aos="fade-up" style="padding-bottom:1rem">
             
             <div class="contact-primary">
 
