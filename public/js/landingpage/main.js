@@ -330,12 +330,16 @@
         
         /* local validation */
         $('#contactForm').validate({
-        
+
             /* submit via ajax */
             submitHandler: function(form) {
     
                 var sLoader = $('.submit-loader');
-    
+                
+                if (document.forms['contactForm']['g-recaptcha-response'].value == "") {
+                    return false;
+                }
+                
                 $.ajax({
     
                     type: "POST",

@@ -25,6 +25,14 @@ class LandingpageController extends Controller
      */
     public function contact(Request $request)
     {
+        $this->validate($request, [
+            'contactName' => 'required',
+            'contactEmail' => 'required',
+            'contactSubject' => 'required',
+            'contactMessage' => 'required',
+            'g-recaptcha-response' => 'required|recaptcha',
+        ]);
+
         Mail::to('lee.peuker@protonmail.com')->send(new Contact($request->all()));
         return 'OK';
     }

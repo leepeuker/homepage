@@ -245,7 +245,7 @@
 
                 <h3 class="h6">Send Me A Message</h3>
 
-                <form name="contactForm" id="contactForm" method="POST" action="/contact" novalidate="novalidate">
+                <form name="contactForm" id="contactForm" method="POST" action="/contact">
                     <fieldset>
     
                     <div class="form-field">
@@ -261,7 +261,8 @@
                         <textarea name="contactMessage" id="contactMessage" placeholder="Your Message" rows="10" cols="50" required aria-required="true" class="full-width"></textarea>
                     </div>
                     <div class="form-field">
-                        <button class="full-width btn--primary">Submit</button>
+                        <div class="g-recaptcha" data-sitekey="{{env('RECAPTCHA_PUBLIC_KEY')}}" style="padding-top:1rem;"></div>
+                        <button class="full-width btn--primary" style="margin-top: 1.8rem;">Submit</button>
                         <div class="submit-loader">
                             <div class="text-loader">Sending...</div>
                             <div class="s-loader">
@@ -408,6 +409,7 @@
     <script src="js/landingpage/jquery-3.2.1.min.js"></script>
     <script src="js/landingpage/plugins.js"></script>
     <script src="js/landingpage/main.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 
 </body>
 
