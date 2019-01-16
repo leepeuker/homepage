@@ -303,7 +303,7 @@
                     <div class="cinfo">
                         <h5>Phone</h5>
                         <p>
-                            Phone: (+49) 176 30509693
+                            On request
                         </p>
                     </div>
 
