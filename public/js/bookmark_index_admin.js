@@ -111,7 +111,7 @@ function generateBookmark(data) {
     if (data.favicon) {
         favicon_tag = `${domain}/storage/favicons/${data.favicon}`;
     } else {
-        favicon_tag = `${domain}/images/default-icon.png`;
+        //favicon_tag = `${domain}/images/default-icon.png`;
     }
 
     return bookmarkCard = `

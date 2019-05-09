@@ -32,8 +32,11 @@ composer_update:
 
 # Laravel
 #########
-generate_app_key:
+artisan_generate_key:
 	docker exec leepeuker-php bash -c "php artisan key:generate"
+	
+artisan_link_storage:
+	docker exec leepeuker-php bash -c "php artisan storage:link"
 
 
 # Database

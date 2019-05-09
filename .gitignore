@@ -1,13 +1,9 @@
+.idea/
 .vscode/
-.docker/resources/nginx/*
-!.docker/resources/nginx/default.conf
-!.docker/resources/nginx/*.dist
-.docker/tmp/*
-!.docker/tmp/.gitkeep
 
+.env
 /node_modules
 /vendor
 /public/hot
 /public/storage
 /storage/*.key
-.env

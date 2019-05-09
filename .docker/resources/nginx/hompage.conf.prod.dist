@@ -1,8 +1,8 @@
 server {
     listen 80;
-    server_name psafeed.test;
+    server_name leepeuker.de;
     
-    root /var/www/psafeed/public;
+    root /var/www/leepeuker/public;
     index index.php;
 
     location / {
@@ -10,7 +10,7 @@ server {
     }
 
     location ~ \.php$ {
-        fastcgi_pass psafeed-php:9000;
+        fastcgi_pass leepeuker-php:9000;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param PHP_VALUE "error_log=/var/log/nginx/application_php_errors.log";
