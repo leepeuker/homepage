@@ -1,0 +1,31 @@
+version: "3.5"
+
+services:
+    leepeuker-nginx:
+        image: nginx:1.15-alpine
+        container_name: leepeuker-nginx
+        restart: always
+        working_dir: /var/www/leepeuker
+        labels:
+            - traefik.enable=true
+            - traefik.backend=${DOMAIN}
+            - traefik.frontend.rule=Host:${DOMAIN}
+        volumes:
+            - ./../:/var/www/leepeuker
+            - ./resources/nginx/:/etc/nginx/conf.d/
+        depends_on:
+            - leepeuker-php
+
+    leepeuker-php:
+        build: build/php
+        container_name: leepeuker-php
+        restart: always
+        user: ${USER_ID}
+        working_dir: /var/www/leepeuker
+        volumes:
+            - ./../:/var/www/leepeuker
+
+networks:
+    default:
+        external:
+            name: webproxy
