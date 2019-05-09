@@ -27,7 +27,7 @@ composer_install:
 	docker exec leepeuker-php bash -c "composer install"
 
 composer_update:
-	docker exec psafeed-leepeuker bash -c "composer update"
+	docker exec leepeuker-php bash -c "composer update"
 
 
 # Laravel
