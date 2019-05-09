@@ -203,15 +203,11 @@
                     <strong>NoSQL</strong>
                 </li>
                 <li>
-                    <div class="progress percent80"><span>80%</span></div>
+                    <div class="progress percent80"><span>85%</span></div>
                     <strong>Linux & Bash</strong>
                 </li>
                 <li>
-                    <div class="progress percent90"><span>90%</span></div>
-                    <strong>Virtual Box</strong>
-                </li>
-                <li>
-                    <div class="progress percent40"><span>40%</span></div>
+                    <div class="progress percent80"><span>80%</span></div>
                     <strong>Docker</strong>
                 </li>
                 <li style="margin-bottom:1rem">
@@ -409,7 +405,7 @@
     <script src="js/landingpage/jquery-3.2.1.min.js"></script>
     <script src="js/landingpage/plugins.js"></script>
     <script src="js/landingpage/main.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </body>
 
