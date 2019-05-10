@@ -42,11 +42,11 @@ artisan_link_storage:
 # Database
 ##########
 db_import:
-	# get dump.sql
-	docker cp .docker/tmp/dump.sql webproxy-mysql:/tmp/dump.sql
+	docker cp $(FILE) webproxy-mysql:/tmp/dump.sql
 	docker exec webproxy-mysql bash -c 'mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) < /tmp/dump.sql'
 	docker exec webproxy-mysql bash -c 'rm /tmp/dump.sql'
 
 db_export:
 	docker exec webproxy-mysql bash -c 'mysqldump --databases --add-drop-database -u$(DB_USERNAME) -p$(DB_PASSWORD) $(DB_DATABASE) > /tmp/dump.sql'
-	docker cp webproxy-mysql:/tmp/dump.sql .docker/tmp/dump-new.sql
+	docker cp webproxy-mysql:/tmp/dump.sql .docker/tmp/psafeed-`date +%Y-%m-%d-%H-%M-%S`.sql
+	docker exec webproxy-mysql bash -c 'rm /tmp/dump.sql'
