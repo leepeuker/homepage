@@ -1,11 +1,11 @@
 version: "3.5"
 
 services:
-    leepeuker-nginx:
+    homepage-nginx:
         image: nginx:1.15-alpine
-        container_name: leepeuker-nginx
+        container_name: homepage-nginx
         restart: always
-        working_dir: /var/www/leepeuker
+        working_dir: /var/www/homepage
         labels:
             - traefik.enable=true
             - traefik.backend=${DOMAIN}
@@ -13,19 +13,19 @@ services:
             - traefik.frontend.entryPoints=${TRAEFIK_ENTRYPOINTS}
             - traefik.frontend.headers.SSLRedirect=${TRAEFIK_SSLREDIRECT}
         volumes:
-            - ./../:/var/www/leepeuker
+            - ./../:/var/www/homepage
             - ./resources/nginx/:/etc/nginx/conf.d/
         depends_on:
-            - leepeuker-php
+            - homepage-php
 
-    leepeuker-php:
+    homepage-php:
         build: build/php
-        container_name: leepeuker-php
+        container_name: homepage-php
         restart: always
         user: ${USER_ID}
-        working_dir: /var/www/leepeuker
+        working_dir: /var/www/homepage
         volumes:
-            - ./../:/var/www/leepeuker
+            - ./../:/var/www/homepage
 
 networks:
     default:

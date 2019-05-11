@@ -24,19 +24,19 @@ rebuild: down
 # Composer
 ##########
 composer_install:
-	docker exec leepeuker-php bash -c "composer install"
+	docker exec homepage-php bash -c "composer install"
 
 composer_update:
-	docker exec leepeuker-php bash -c "composer update"
+	docker exec homepage-php bash -c "composer update"
 
 
 # Laravel
 #########
 artisan_generate_key:
-	docker exec leepeuker-php bash -c "php artisan key:generate"
+	docker exec homepage-php bash -c "php artisan key:generate"
 	
 artisan_link_storage:
-	docker exec leepeuker-php bash -c "php artisan storage:link"
+	docker exec homepage-php bash -c "php artisan storage:link"
 
 
 # Database
