@@ -20,7 +20,7 @@ reup: down up
 rebuild: down
 	docker-compose -f .docker/docker-compose.yaml build
 	
-	
+
 # Container interaction
 #######################
 connect_php_bash:
@@ -28,6 +28,9 @@ connect_php_bash:
 
 connect_nginx_shell:
 	docker exec -it homepage-nginx sh
+
+connect_mysql_cli:
+	docker exec -it webproxy-mysql sh -c "mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME}"
 
 logs_php:
 	docker logs -f anna-in-a-nutshell-php
