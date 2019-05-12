@@ -20,6 +20,7 @@ reup: down up
 rebuild: down
 	docker-compose -f .docker/docker-compose.yaml build
 	
+	
 # Container interaction
 #######################
 connect_php_bash:
@@ -28,7 +29,14 @@ connect_php_bash:
 connect_nginx_shell:
 	docker exec -it homepage-nginx sh
 
+logs_php:
+	docker logs -f anna-in-a-nutshell-php
+
+logs_nginx:
+	docker logs -f anna-in-a-nutshell-nginx
+
 	
+
 # Composer
 ##########
 composer_install:
