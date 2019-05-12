@@ -10,6 +10,7 @@ services:
             - traefik.enable=true
             - traefik.backend=${DOMAIN}
             - traefik.frontend.rule=Host:${DOMAIN}
+            - traefik.frontend.passHostHeader=true
             - traefik.frontend.entryPoints=${TRAEFIK_ENTRYPOINTS}
             - traefik.frontend.headers.SSLRedirect=${TRAEFIK_SSLREDIRECT}
         volumes:
