@@ -1,6 +1,8 @@
 tmp/*
-tmp/.gitkeep
+!tmp/.gitkeep
 
 resources/nginx/*
 !resources/nginx/default.conf
 !resources/nginx/*.dist
+logs/*
+!logs/.gitkeep

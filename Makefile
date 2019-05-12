@@ -20,6 +20,14 @@ reup: down up
 rebuild: down
 	docker-compose -f .docker/docker-compose.yaml build
 	
+# Container interaction
+#######################
+connect_php_bash:
+	docker exec -it homepage-php bash
+
+connect_nginx_shell:
+	docker exec -it homepage-nginx sh
+
 	
 # Composer
 ##########
