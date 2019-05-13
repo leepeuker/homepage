@@ -4,19 +4,22 @@ FROM php:7.3.4-fpm-alpine
 RUN apk update && apk upgrade
 
 # install system dependencies
-RUN apk add --no-cache git                  \
-                       bash                 \
-                       nano                 \
-                       curl                 \
-                       wget                 \
-                       unzip                \
-                       make                 \
-                       zip                  \
-                       libzip-dev           \
+RUN apk add --no-cache git              \
+                       bash             \
+                       nano             \
+                       curl             \
+                       wget             \
+                       unzip            \
+                       make             \
+                       zip              \
+                       libzip-dev       \
+                       tzdata           \
                        $PHPIZE_DEPS
 
+# Set timezone
+RUN cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime && echo "Europe/Berlin" > /etc/timezone
 
-# install php dependencies
+# install and enable php dependencies
 RUN pecl install xdebug-beta            \
     &&                                  \
     docker-php-ext-install mysqli       \

@@ -9,7 +9,7 @@ init: rebuild
 
 # Container management
 ######################
-up:
+up: rebuild
 	docker-compose -f .docker/docker-compose.yaml up -d
 
 down:
@@ -18,7 +18,7 @@ down:
 reup: down up
 
 rebuild: down
-	docker-compose -f .docker/docker-compose.yaml build
+	docker-compose -f .docker/docker-compose.yaml build --no-cache
 	
 
 # Container interaction
