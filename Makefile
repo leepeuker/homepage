@@ -9,7 +9,7 @@ init: rebuild
 
 # Container management
 ######################
-up: rebuild
+up: 
 	docker-compose -f .docker/docker-compose.yaml up -d
 
 down:
