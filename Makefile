@@ -1,71 +1,51 @@
 include .env
 
-# Project management
-####################
-init: rebuild
-	cp .docker/resources/nginx/leepeuker.de.conf.${APP_ENV}.dist .docker/resources/nginx/leepeuker.de.conf
-	# make db_import
-
-
-# Container management
-######################
-up: 
-	docker-compose -f .docker/docker-compose.yaml up -d
-
-down:
-	docker-compose -f .docker/docker-compose.yaml down
-
-reup: down up
-
-rebuild: down
-	docker-compose -f .docker/docker-compose.yaml build --no-cache
-	
 
 # Container interaction
 #######################
 connect_php_bash:
-	docker exec -it homepage-php bash
+	docker exec -it php bash
 
 connect_nginx_shell:
-	docker exec -it homepage-nginx sh
+	docker exec -it nginx sh
 
 connect_mysql_cli:
-	docker exec -it webproxy-mysql sh -c "mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME}"
+	docker exec -it mysql sh -c "mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME}"
 
 logs_php:
-	docker logs -f anna-in-a-nutshell-php
+	docker logs -f php
 
 logs_nginx:
-	docker logs -f anna-in-a-nutshell-nginx
+	docker logs -f nginx
 
 	
 
 # Composer
 ##########
 composer_install:
-	docker exec homepage-php bash -c "composer install"
+	docker exec php bash -c "composer install"
 
 composer_update:
-	docker exec homepage-php bash -c "composer update"
+	docker exec php bash -c "composer update"
 
 
 # Laravel
 #########
 artisan_generate_key:
-	docker exec homepage-php bash -c "php artisan key:generate"
+	docker exec php bash -c "php artisan key:generate"
 	
 artisan_link_storage:
-	docker exec homepage-php bash -c "php artisan storage:link"
+	docker exec php bash -c "php artisan storage:link"
 
 
 # Database
 ##########
 db_import:
-	docker cp $(FILE) webproxy-mysql:/tmp/dump.sql
-	docker exec webproxy-mysql bash -c 'mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) < /tmp/dump.sql'
-	docker exec webproxy-mysql bash -c 'rm /tmp/dump.sql'
+	docker cp $(FILE) mysql:/tmp/dump.sql
+	docker exec mysql bash -c 'mysql -u$(DB_USERNAME) -p$(DB_PASSWORD) < /tmp/dump.sql'
+	docker exec mysql bash -c 'rm /tmp/dump.sql'
 
 db_export:
-	docker exec webproxy-mysql bash -c 'mysqldump --databases --add-drop-database -u$(DB_USERNAME) -p$(DB_PASSWORD) $(DB_DATABASE) > /tmp/dump.sql'
-	docker cp webproxy-mysql:/tmp/dump.sql .docker/tmp/psafeed-`date +%Y-%m-%d-%H-%M-%S`.sql
-	docker exec webproxy-mysql bash -c 'rm /tmp/dump.sql'
+	docker exec mysql bash -c 'mysqldump --databases --add-drop-database -u$(DB_USERNAME) -p$(DB_PASSWORD) $(DB_DATABASE) > /tmp/dump.sql'
+	docker cp mysql:/tmp/dump.sql ./tmp/leepeuker-`date +%Y-%m-%d-%H-%M-%S`.sql
+	docker exec mysql bash -c 'rm /tmp/dump.sql'

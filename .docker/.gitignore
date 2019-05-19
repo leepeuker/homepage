@@ -1,9 +1,0 @@
-logs/*
-!logs/.gitkeep
-
-tmp/*
-!tmp/.gitkeep
-
-resources/nginx/*
-!resources/nginx/default.conf
-!resources/nginx/*.dist
