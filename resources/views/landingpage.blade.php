@@ -331,7 +331,7 @@
 
             <div class="col-twelve">
                 <div class="copyright">
-                    <span>© Copyright Lee Peuker 2018</span> 
+                    <span>© Copyright Lee Peuker 2019</span> 
                     <span>Site Template by <a href="https://www.colorlib.com/">Colorlib</a></span>	
                 </div>
 
