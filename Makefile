@@ -10,7 +10,7 @@ connect_nginx_shell:
 	docker exec -it nginx sh
 
 connect_mysql_cli:
-	docker exec -it mysql sh -c "mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME}"
+	docker exec -it mysql sh -c "mysql -u${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE}"
 
 logs_php:
 	docker logs -f php
