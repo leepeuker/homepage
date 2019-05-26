@@ -9,7 +9,7 @@
         "arthurhoaro/favicon": "^1.2",
         "fideloper/proxy": "^4.0",
         "greggilbert/recaptcha": "^2.2",
-        "laravel/framework": "5.6.*",
+        "laravel/framework": "^5.0",
         "laravel/tinker": "^1.0"
     },
     "require-dev": {

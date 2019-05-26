@@ -23,19 +23,19 @@ logs_nginx:
 # Composer
 ##########
 composer_install:
-	docker exec php bash -c "composer install"
+	docker exec php bash -c "cd homepage && composer install"
 
 composer_update:
-	docker exec php bash -c "composer update"
+	docker exec php bash -c "cd homepage && composer update"
 
 
 # Laravel
 #########
 artisan_generate_key:
-	docker exec php bash -c "php artisan key:generate"
+	docker exec php bash -c "cd homepage && php artisan key:generate"
 	
 artisan_link_storage:
-	docker exec php bash -c "php artisan storage:link"
+	docker exec php bash -c "cd homepage && php artisan storage:link"
 
 
 # Database
