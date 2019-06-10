@@ -183,7 +183,7 @@
                     <strong>PHP</strong>
                 </li>
                 <li>
-                    <div class="progress percent65"><span>65%</span></div>
+                    <div class="progress percent55"><span>55%</span></div>
                     <strong>JS & Node.js</strong>
                 </li>
                 <li>
@@ -191,7 +191,7 @@
                     <strong>Python</strong>
                 </li>
                 <li>
-                    <div class="progress percent75"><span>75%</span></div>
+                    <div class="progress percent75"><span>70%</span></div>
                     <strong>HTML5/CSS3</strong>
                 </li>
                 <li>
@@ -203,7 +203,7 @@
                     <strong>NoSQL</strong>
                 </li>
                 <li>
-                    <div class="progress percent80"><span>85%</span></div>
+                    <div class="progress percent85"><span>85%</span></div>
                     <strong>Linux & Bash</strong>
                 </li>
                 <li>
@@ -211,7 +211,7 @@
                     <strong>Docker</strong>
                 </li>
                 <li style="margin-bottom:1rem">
-                    <div class="progress percent75"><span>75%</span></div>
+                    <div class="progress percent85"><span>85%</span></div>
                     <strong>Git</strong>
                 </li>
             </ul>
